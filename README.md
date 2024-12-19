@@ -1,4 +1,4 @@
-<img src="https://github.com/user-attachments/assets/904bd6d5-9112-4c53-827b-f9dd2d49f764" width="300px" height="auto" />
+<img src="https://github.com/user-attachments/assets/904bd6d5-9112-4c53-827b-f9dd2d49f764" width="300px" height="auto" title="I created this image with AI, but I'll improve it in the future. For now, back to coding! Haha"/>
 
 # MoneyTrackr
 
