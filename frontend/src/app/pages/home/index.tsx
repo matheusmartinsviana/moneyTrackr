@@ -12,7 +12,7 @@ type Account = {
   personId: number;
 };
 
-const App: React.FC = () => {
+const Home: React.FC = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [personName, setPersonName] = useState("");
@@ -51,10 +51,13 @@ const App: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
-      <h1>Finance App</h1>
+    <div>
+      <h1 title="Rastreie suas finanças, alcance seus objetivos.">
+        Money Trackr
+      </h1>
+      <p>Rastreie suas finanças, alcance seus objetivos.</p>
 
-      <div style={{ marginBottom: "20px" }}>
+      <div>
         <h2>Add Person</h2>
         <input
           type="text"
@@ -65,7 +68,7 @@ const App: React.FC = () => {
         <button onClick={addPerson}>Add Person</button>
       </div>
 
-      <div style={{ marginBottom: "20px" }}>
+      <div>
         <h2>Add Account</h2>
         <input
           type="text"
@@ -93,12 +96,12 @@ const App: React.FC = () => {
         <button onClick={addAccount}>Add Account</button>
       </div>
 
-      <div style={{ marginBottom: "20px" }}>
+      <div>
         <h2>Accounts</h2>
         {accounts.map((account) => {
           const person = people.find((p) => p.id === account.personId);
           return (
-            <div key={account.id} style={{ marginBottom: "10px" }}>
+            <div key={account.id}>
               <strong>Account:</strong> {account.name} <br />
               <strong>Value:</strong> ${account.value.toFixed(2)} <br />
               <strong>Responsible:</strong>{" "}
@@ -108,10 +111,10 @@ const App: React.FC = () => {
         })}
       </div>
 
-      <div style={{ marginBottom: "20px" }}>
+      <div>
         <h2>Total by Person</h2>
         {people.map((person) => (
-          <div key={person.id} style={{ marginBottom: "10px" }}>
+          <div key={person.id}>
             <strong>{person.name}:</strong> $
             {getTotalByPerson(person.id).toFixed(2)}
           </div>
@@ -121,4 +124,4 @@ const App: React.FC = () => {
   );
 };
 
-export default App;
+export default Home;
