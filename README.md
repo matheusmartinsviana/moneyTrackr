@@ -4,6 +4,10 @@
 
 **Rastreie suas finanças, alcance seus objetivos.**
 
+## Mais sobre o projeto
+
+A principal ideia deste web app é subdivir gastos apartir de um determinado responsável.
+
 ## Licença
 
 Este projeto está licenciado sob a licença [MIT](./LICENSE). Sinta-se à vontade para usá-lo e modificá-lo conforme necessário.
