@@ -58,64 +58,63 @@ const Home: React.FC = () => {
       <p>Rastreie suas finanças, alcance seus objetivos.</p>
 
       <div>
-        <h2>Add Person</h2>
+        <h2>Adicione uma nova pessoa</h2>
         <input
           type="text"
-          placeholder="Person Name"
+          placeholder="Nome da Pessoa"
           value={personName}
           onChange={(e) => setPersonName(e.target.value)}
         />
-        <button onClick={addPerson}>Add Person</button>
+        <button onClick={addPerson}>Adicionar pessoa</button>
       </div>
-
       <div>
-        <h2>Add Account</h2>
-        <input
-          type="text"
-          placeholder="Account Name"
-          value={accountName}
-          onChange={(e) => setAccountName(e.target.value)}
-        />
-        <input
-          type="number"
-          placeholder="Account Value"
-          value={accountValue}
-          onChange={(e) => setAccountValue(Number(e.target.value))}
-        />
+        <h2>Adicionar conta</h2>
         <select
           value={selectedPerson}
           onChange={(e) => setSelectedPerson(Number(e.target.value))}
         >
-          <option value="">Select Person</option>
+          <option value="">Selecionar pessoa</option>
           {people.map((person) => (
             <option key={person.id} value={person.id}>
               {person.name}
             </option>
           ))}
         </select>
-        <button onClick={addAccount}>Add Account</button>
+        <input
+          type="text"
+          placeholder="Nome da Conta"
+          value={accountName}
+          onChange={(e) => setAccountName(e.target.value)}
+        />
+        <input
+          type="number"
+          placeholder="Valor da conta"
+          value={accountValue}
+          onChange={(e) => setAccountValue(Number(e.target.value))}
+        />
+        <button onClick={addAccount}>Adicionar Conta</button>
       </div>
 
       <div>
-        <h2>Accounts</h2>
+        <h2>Contas</h2>
         {accounts.map((account) => {
           const person = people.find((p) => p.id === account.personId);
           return (
             <div key={account.id}>
-              <strong>Account:</strong> {account.name} <br />
-              <strong>Value:</strong> ${account.value.toFixed(2)} <br />
-              <strong>Responsible:</strong>{" "}
-              {person ? person.name : "Unassigned"}
+              <strong>Origem:</strong> {account.name} <br />
+              <strong>Valor:</strong> R$ {account.value.toFixed(2)} <br />
+              <strong>Responsável:</strong>{" "}
+              {person ? person.name : "Não atribuído"}
             </div>
           );
         })}
       </div>
 
       <div>
-        <h2>Total by Person</h2>
+        <h2>Total por pessoa</h2>
         {people.map((person) => (
           <div key={person.id}>
-            <strong>{person.name}:</strong> $
+            <strong>{person.name}:</strong> R${"  "}
             {getTotalByPerson(person.id).toFixed(2)}
           </div>
         ))}
