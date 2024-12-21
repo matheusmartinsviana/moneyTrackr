@@ -1,8 +1,13 @@
-import React from "react";
-import { AppRoutes } from "./routes";
+import React, { Suspense } from "react";
+import { AppRoutes } from "./routes/AppRoutes";
+import Loading from "./shared/components/Loading";
 
 const App: React.FC = () => {
-  return <AppRoutes />;
+  return (
+    <Suspense fallback={<Loading />}>
+      <AppRoutes />
+    </Suspense>
+  );
 };
 
 export default App;
