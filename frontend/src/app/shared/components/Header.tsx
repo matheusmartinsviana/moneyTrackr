@@ -10,7 +10,7 @@ const Header = () => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
 
-    let interval;
+    let interval: string | number | NodeJS.Timeout | undefined;
     if (windowWidth >= 768) {
       interval = setInterval(() => {
         setShowTitle((prev) => !prev);
