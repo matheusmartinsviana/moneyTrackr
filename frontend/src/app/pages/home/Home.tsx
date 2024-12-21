@@ -52,11 +52,6 @@ const Home: React.FC = () => {
 
   return (
     <div>
-      <h1 title="Rastreie suas finanças, alcance seus objetivos.">
-        Money Trackr
-      </h1>
-      <p>Rastreie suas finanças, alcance seus objetivos.</p>
-
       <div>
         <h2>Adicione uma nova pessoa</h2>
         <input
