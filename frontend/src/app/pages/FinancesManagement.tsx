@@ -112,7 +112,7 @@ const FinancesManagement: React.FC = () => {
 
   return (
     <div>
-      <div style={{ marginBottom: "20px" }}>
+      <div>
         <h2>Adicionar Nova Pessoa</h2>
         <input
           type="text"
@@ -120,12 +120,10 @@ const FinancesManagement: React.FC = () => {
           value={personName}
           onChange={(e) => setPersonName(e.target.value)}
         />
-        <button onClick={addPerson} style={{ padding: "8px 12px" }}>
-          Adicionar Pessoa
-        </button>
+        <button onClick={addPerson}>Adicionar Pessoa</button>
       </div>
 
-      <div style={{ marginBottom: "20px" }}>
+      <div>
         <h2>Adicionar Conta</h2>
         <select
           value={selectedPerson}
@@ -171,12 +169,10 @@ const FinancesManagement: React.FC = () => {
           value={accountValue}
           onChange={(e) => setAccountValue(e.target.value)}
         />
-        <button onClick={addAccount} style={{ padding: "8px 12px" }}>
-          Adicionar Conta
-        </button>
+        <button onClick={addAccount}>Adicionar Conta</button>
       </div>
 
-      <div style={{ marginBottom: "20px" }}>
+      <div>
         <h2>Tipos de Conta</h2>
         {accountTypes.map((type, index) => (
           <div key={index}>
