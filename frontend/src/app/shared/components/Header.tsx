@@ -10,17 +10,18 @@ const Header = () => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
 
-    let interval: string | number | NodeJS.Timeout | undefined;
+    let interval: number | undefined;
+
     if (windowWidth >= 768) {
-      interval = setInterval(() => {
+      interval = window.setInterval(() => {
         setShowTitle((prev) => !prev);
       }, 5000);
     } else {
-      setShowTitle(true)
+      setShowTitle(true);
     }
 
     return () => {
-      clearInterval(interval);
+      if (interval) clearInterval(interval);
       window.removeEventListener("resize", handleResize);
     };
   }, [windowWidth]);
