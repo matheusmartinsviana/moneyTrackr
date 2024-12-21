@@ -1,7 +1,9 @@
 import React, { lazy } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { Body } from "../shared/components/Body";
-import Finances from "../pages/Finances";
+import FinancesManagement from "../pages/FinancesManagement";
+import FinancesDashboard from "../pages/FinancesDashboard";
+import Error404 from "../pages/Error404";
 const Home = lazy(() => import("../pages/Home")); //lazy permite carregar componentes sob demanda
 
 // Simulando um atraso na importação do componente para forçar o loading
@@ -19,7 +21,9 @@ export const AppRoutes: React.FC = () => {
       <Routes>
         <Route path="/" element={<Body />}>
           <Route path="/" element={<Home />} />
-          <Route path="/financias" element={<Finances />} />
+          <Route path="/gerenciar-financias" element={<FinancesManagement />} />
+          <Route path="/dashboard" element={<FinancesDashboard />} />
+          <Route path="*" element={<Error404 />} />
         </Route>
       </Routes>
     </BrowserRouter>
