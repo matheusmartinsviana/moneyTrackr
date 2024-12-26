@@ -1,18 +1,20 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import React, { useEffect, useState } from "react";
+import Select from "../shared/components/Select";
+import Button from "../shared/components/Button";
+import ReusableInput from "../shared/components/Input";
 
-type Person = {
+interface Person {
   id: number;
   name: string;
-};
+}
 
-type Account = {
+interface Account {
   id: number;
   name: string;
   type: string;
   value: number;
   personId: number;
-};
+}
 
 const FinancesManagement: React.FC = () => {
   const [people, setPeople] = useState<Person[]>(() => {
@@ -114,48 +116,42 @@ const FinancesManagement: React.FC = () => {
     <div>
       <div>
         <h2>Adicionar Nova Pessoa</h2>
-        <input
-          type="text"
-          placeholder="Nome da Pessoa"
+        <ReusableInput
+          label="Nome da Pessoa"
           value={personName}
           onChange={(e) => setPersonName(e.target.value)}
+          placeholder="Digite o nome da pessoa"
         />
-        <button onClick={addPerson}>Adicionar Pessoa</button>
+        <Button label="Adicionar Pessoa" onClick={addPerson} />
       </div>
 
       <div>
         <h2>Adicionar Conta</h2>
-        <select
-          value={selectedPerson}
-          onChange={(e) => setSelectedPerson(Number(e.target.value) || "")}
-        >
-          <option value="">Selecionar Pessoa</option>
-          {people.map((person) => (
-            <option key={person.id} value={person.id}>
-              {person.name}
-            </option>
-          ))}
-        </select>
-        <input
-          type="text"
-          placeholder="Nome da Conta"
+        <Select
+          options={people.map((person) => ({
+            value: person.id,
+            label: person.name,
+          }))}
+          onChange={(value) => setSelectedPerson(Number(value))}
+          placeholder="Selecionar Pessoa"
+        />
+        <ReusableInput
+          label="Nome da Conta"
           value={accountName}
           onChange={(e) => setAccountName(e.target.value)}
+          placeholder="Digite o nome da conta"
         />
-        <select
-          value={accountType}
-          onChange={(e) => setAccountType(e.target.value)}
-        >
-          <option value="">Selecionar Tipo de Conta</option>
-          {accountTypes.map((type, index) => (
-            <option key={index} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
-        <input
-          type="text"
-          placeholder="Novo Tipo de Conta"
+        <Select
+          options={accountTypes.map((type) => ({
+            value: type,
+            label: type,
+          }))}
+          onChange={(value) => setAccountType(String(value))}
+          placeholder="Selecionar Tipo de Conta"
+        />
+        <ReusableInput
+          label="Novo Tipo de Conta"
+          placeholder="Digite o novo tipo e pressione Enter"
           onKeyDown={(e) => {
             if (e.key === "Enter") {
               addAccountType(e.currentTarget.value);
@@ -163,13 +159,14 @@ const FinancesManagement: React.FC = () => {
             }
           }}
         />
-        <input
+        <ReusableInput
+          label="Valor da Conta"
           type="number"
-          placeholder="Valor da Conta"
           value={accountValue}
           onChange={(e) => setAccountValue(e.target.value)}
+          placeholder="Digite o valor da conta"
         />
-        <button onClick={addAccount}>Adicionar Conta</button>
+        <Button label="Adicionar Conta" onClick={addAccount} />
       </div>
 
       <div>
@@ -177,7 +174,7 @@ const FinancesManagement: React.FC = () => {
         {accountTypes.map((type, index) => (
           <div key={index}>
             <span>{type}</span>
-            <button onClick={() => removeAccountType(type)}>Remover</button>
+            <Button label="Remover" onClick={() => removeAccountType(type)} />
           </div>
         ))}
       </div>
@@ -201,51 +198,14 @@ const FinancesManagement: React.FC = () => {
                   .filter((account) => account.personId === person.id)
                   .map((account) => (
                     <tr key={account.id}>
-                      <td
-                        contentEditable
-                        suppressContentEditableWarning
-                        onBlur={(e) =>
-                          updateAccount(
-                            account.id,
-                            "name",
-                            // @ts-expect-error
-                            e.target.textContent || ""
-                          )
-                        }
-                      >
-                        {account.name}
-                      </td>
-                      <td
-                        contentEditable
-                        suppressContentEditableWarning
-                        onBlur={(e) =>
-                          updateAccount(
-                            account.id,
-                            "type",
-                            // @ts-expect-error
-                            e.target.textContent || ""
-                          )
-                        }
-                      >
-                        {account.type}
-                      </td>
-                      <td
-                        contentEditable
-                        suppressContentEditableWarning
-                        onBlur={(e) =>
-                          updateAccount(
-                            account.id,
-                            "value",
-                            parseFloat(e.target.textContent || "0") || 0
-                          )
-                        }
-                      >
-                        {account.value.toFixed(2)}
-                      </td>
+                      <td>{account.name}</td>
+                      <td>{account.type}</td>
+                      <td>{account.value.toFixed(2)}</td>
                       <td>
-                        <button onClick={() => deleteAccount(account.id)}>
-                          🗑️
-                        </button>
+                        <Button
+                          label="🗑️"
+                          onClick={() => deleteAccount(account.id)}
+                        />
                       </td>
                     </tr>
                   ))}
