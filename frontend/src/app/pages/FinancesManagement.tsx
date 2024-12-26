@@ -96,13 +96,13 @@ const FinancesManagement: React.FC = () => {
     localStorage.setItem("accountTypes", JSON.stringify(updatedTypes));
   };
 
-  const updateAccount = (id: number, field: keyof Account, value: number) => {
-    setAccounts((prev) =>
-      prev.map((account) =>
-        account.id === id ? { ...account, [field]: value } : account
-      )
-    );
-  };
+  // const updateAccount = (id: number, field: keyof Account, value: number) => {
+  //   setAccounts((prev) =>
+  //     prev.map((account) =>
+  //       account.id === id ? { ...account, [field]: value } : account
+  //     )
+  //   );
+  // };
 
   const deleteAccount = (id: number) => {
     setAccounts((prev) => prev.filter((account) => account.id !== id));
@@ -186,33 +186,41 @@ const FinancesManagement: React.FC = () => {
         {people.map((person) => (
           <div key={person.id} className={styles.personAccounts}>
             <h3>{person.name}</h3>
-            <table>
-              <thead>
-                <tr>
-                  <th>Conta</th>
-                  <th>Tipo da Conta</th>
-                  <th>Valor</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody>
+            <div className={styles.personAccounts}>
+              <h3>{person.name}</h3>
+              <div className={styles.customTable}>
+                <div className={styles.customTableHeader}>Conta</div>
+                <div className={styles.customTableHeader}>Tipo da Conta</div>
+                <div className={styles.customTableHeader}>Valor</div>
+                <div className={styles.customTableHeader}>Ações</div>
                 {accounts
                   .filter((account) => account.personId === person.id)
                   .map((account) => (
-                    <tr key={account.id}>
-                      <td>{account.name}</td>
-                      <td>{account.type}</td>
-                      <td>{account.value.toFixed(2)}</td>
-                      <td>
+                    <React.Fragment key={account.id}>
+                      <div className={styles.customTableCell}>
+                        {account.name}
+                      </div>
+                      <div className={styles.customTableCell}>
+                        {account.type}
+                      </div>
+                      <div className={styles.customTableCell}>
+                        {account.value.toFixed(2)}
+                      </div>
+                      <div className={styles.customTableCell}>
                         <Button
                           label="🗑️"
                           onClick={() => deleteAccount(account.id)}
                         />
-                      </td>
-                    </tr>
+                      </div>
+                    </React.Fragment>
                   ))}
-              </tbody>
-            </table>
+              </div>
+              <div>
+                <strong>Total:</strong> R$
+                {getTotalByPerson(person.id).toFixed(2)}
+              </div>
+            </div>
+
             <div>
               <strong>Total:</strong> R${" "}
               {getTotalByPerson(person.id).toFixed(2)}
