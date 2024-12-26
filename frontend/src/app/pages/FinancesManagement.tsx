@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import Select from "../shared/components/Select";
 import Button from "../shared/components/Button";
 import ReusableInput from "../shared/components/Input";
+import styles from "./styles/FinancesManagement.module.css";
 
+// Helper Types
 interface Person {
   id: number;
   name: string;
@@ -113,8 +115,8 @@ const FinancesManagement: React.FC = () => {
   };
 
   return (
-    <div>
-      <div>
+    <div className={styles.mainFinancesContent}>
+      <section className={styles.addPersonSection}>
         <h2>Adicionar Nova Pessoa</h2>
         <ReusableInput
           label="Nome da Pessoa"
@@ -123,9 +125,9 @@ const FinancesManagement: React.FC = () => {
           placeholder="Digite o nome da pessoa"
         />
         <Button label="Adicionar Pessoa" onClick={addPerson} />
-      </div>
+      </section>
 
-      <div>
+      <section className={styles.addAccountSection}>
         <h2>Adicionar Conta</h2>
         <Select
           options={people.map((person) => ({
@@ -167,22 +169,22 @@ const FinancesManagement: React.FC = () => {
           placeholder="Digite o valor da conta"
         />
         <Button label="Adicionar Conta" onClick={addAccount} />
-      </div>
+      </section>
 
-      <div>
+      <section className={styles.accountTypesSection}>
         <h2>Tipos de Conta</h2>
         {accountTypes.map((type, index) => (
-          <div key={index}>
+          <div key={index} className={styles.accountTypeItem}>
             <span>{type}</span>
             <Button label="Remover" onClick={() => removeAccountType(type)} />
           </div>
         ))}
-      </div>
+      </section>
 
-      <div>
+      <section className={styles.accountsByPersonSection}>
         <h2>Contas por Pessoa</h2>
         {people.map((person) => (
-          <div key={person.id}>
+          <div key={person.id} className={styles.personAccounts}>
             <h3>{person.name}</h3>
             <table>
               <thead>
@@ -217,7 +219,7 @@ const FinancesManagement: React.FC = () => {
             </div>
           </div>
         ))}
-      </div>
+      </section>
     </div>
   );
 };

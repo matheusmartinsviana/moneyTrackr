@@ -1,0 +1,27 @@
+.footerContent {
+  height: 10vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.footerContent h1 {
+  color: rgb(161, 161, 161);
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.footerContent svg {
+  color: rgb(161, 161, 161);
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}

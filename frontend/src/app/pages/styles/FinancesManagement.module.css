@@ -1,0 +1,35 @@
+.mainFinancesContent {
+  padding: 20px;
+  background-color: #f5f5f5;
+}
+
+.addPersonSection,
+.addAccountSection,
+.accountTypesSection,
+.accountsByPersonSection {
+  margin-bottom: 30px;
+}
+
+.accountTypeItem {
+  display: flex;
+  justify-content: space-between;
+}
+
+.personAccounts {
+  margin-top: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+button {
+  cursor: pointer;
+}
