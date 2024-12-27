@@ -13,3 +13,21 @@ a {
 li {
   list-style: none;
 }
+
+button:active,
+a:active {
+  background-color: transparent !important;
+  outline: none !important;
+}
+
+svg:active {
+  fill: inherit;
+  background-color: transparent;
+  outline: none;
+}
+
+button,
+a,
+svg {
+  -webkit-tap-highlight-color: transparent;
+}
