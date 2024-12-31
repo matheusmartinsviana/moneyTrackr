@@ -32,6 +32,8 @@ const FinancesManagement: React.FC = () => {
     return savedTypes ? JSON.parse(savedTypes) : [];
   });
 
+  const [isActiveAddPerson, setIsActiveAddPerson] = useState(false);
+  const [isActiveAddAccountType, setIsActiveAddAccountType] = useState(false);
   const [personName, setPersonName] = useState("");
   const [accountName, setAccountName] = useState("");
   const [accountType, setAccountType] = useState("");
@@ -54,6 +56,7 @@ const FinancesManagement: React.FC = () => {
     if (personName.trim()) {
       setPeople([...people, { id: Date.now(), name: personName.trim() }]);
       setPersonName("");
+      setIsActiveAddPerson(false);
     }
   };
 
@@ -88,6 +91,7 @@ const FinancesManagement: React.FC = () => {
       setAccountTypes(updatedTypes);
       localStorage.setItem("accountTypes", JSON.stringify(updatedTypes));
     }
+    setIsActiveAddAccountType(false);
   };
 
   const removeAccountType = (type: string) => {
@@ -117,14 +121,23 @@ const FinancesManagement: React.FC = () => {
   return (
     <div className={styles.mainFinancesContent}>
       <section className={styles.addPersonSection}>
-        <h2>Adicionar Nova Pessoa</h2>
-        <ReusableInput
-          label="Nome da Pessoa"
-          value={personName}
-          onChange={(e) => setPersonName(e.target.value)}
-          placeholder="Digite o nome da pessoa"
-        />
-        <Button label="Adicionar Pessoa" onClick={addPerson} />
+        {isActiveAddPerson ? (
+          <>
+            <h2>Adicionar Nova Pessoa</h2>
+            <ReusableInput
+              label="Nome da Pessoa"
+              value={personName}
+              onChange={(e) => setPersonName(e.target.value)}
+              placeholder="Digite o nome da pessoa"
+            />
+            <Button label="Adicionar Pessoa" onClick={addPerson} />
+          </>
+        ) : (
+          <Button
+            label="Adicionar Pessoa"
+            onClick={() => setIsActiveAddPerson(!isActiveAddPerson)}
+          />
+        )}
       </section>
 
       <section className={styles.addAccountSection}>
@@ -151,16 +164,24 @@ const FinancesManagement: React.FC = () => {
           onChange={(value) => setAccountType(String(value))}
           placeholder="Selecionar Tipo de Conta"
         />
-        <ReusableInput
-          label="Novo Tipo de Conta"
-          placeholder="Digite o novo tipo e pressione Enter"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              addAccountType(e.currentTarget.value);
-              e.currentTarget.value = "";
-            }
-          }}
-        />
+        {isActiveAddAccountType ? (
+          <ReusableInput
+            label="Novo Tipo de Conta"
+            placeholder="Digite o novo tipo e pressione Enter"
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                addAccountType(e.currentTarget.value);
+                e.currentTarget.value = "";
+              }
+            }}
+          />
+        ) : (
+          <Button
+            label="Adicionar Conta"
+            onClick={() => setIsActiveAddAccountType(!isActiveAddAccountType)}
+          />
+        )}
+
         <ReusableInput
           label="Valor da Conta"
           type="number"
