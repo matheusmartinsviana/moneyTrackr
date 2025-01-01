@@ -177,7 +177,7 @@ const FinancesManagement: React.FC = () => {
           />
         ) : (
           <Button
-            label="Adicionar Conta"
+            label="Adicionar Tipo de Conta"
             onClick={() => setIsActiveAddAccountType(!isActiveAddAccountType)}
           />
         )}
@@ -204,19 +204,25 @@ const FinancesManagement: React.FC = () => {
 
       <section className={styles.accountsByPersonSection}>
         <h2>Contas por Pessoa</h2>
-        {people.map((person) => (
-          <div key={person.id} className={styles.personAccounts}>
-            <h3>{person.name}</h3>
-            <div className={styles.personAccounts}>
+        {people.map((person) => {
+          const personAccounts = accounts.filter(
+            (account) => account.personId === person.id
+          );
+
+          return (
+            <div key={person.id} className={styles.personAccounts}>
               <h3>{person.name}</h3>
-              <div className={styles.customTable}>
-                <div className={styles.customTableHeader}>Conta</div>
-                <div className={styles.customTableHeader}>Tipo da Conta</div>
-                <div className={styles.customTableHeader}>Valor</div>
-                <div className={styles.customTableHeader}>Ações</div>
-                {accounts
-                  .filter((account) => account.personId === person.id)
-                  .map((account) => (
+
+              {personAccounts.length === 0 ? (
+                <p>Não há contas ainda</p> // Show this message if no accounts exist for the person
+              ) : (
+                <div className={styles.customTable}>
+                  <div className={styles.customTableHeader}>Conta</div>
+                  <div className={styles.customTableHeader}>Tipo da Conta</div>
+                  <div className={styles.customTableHeader}>Valor</div>
+                  <div className={styles.customTableHeader}>Ações</div>
+
+                  {personAccounts.map((account) => (
                     <React.Fragment key={account.id}>
                       <div className={styles.customTableCell}>
                         {account.name}
@@ -228,26 +234,25 @@ const FinancesManagement: React.FC = () => {
                         {account.value.toFixed(2)}
                       </div>
                       <div className={styles.customTableCell}>
-                        <Button
-                          label="🗑️"
+                        <button
+                          className={styles.deleteRowButton}
                           onClick={() => deleteAccount(account.id)}
-                        />
+                        >
+                          🗑️
+                        </button>
                       </div>
                     </React.Fragment>
                   ))}
-              </div>
+                </div>
+              )}
+
               <div>
-                <strong>Total:</strong> R$
+                <strong>Total:</strong> R${" "}
                 {getTotalByPerson(person.id).toFixed(2)}
               </div>
             </div>
-
-            <div>
-              <strong>Total:</strong> R${" "}
-              {getTotalByPerson(person.id).toFixed(2)}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </section>
     </div>
   );
