@@ -87,6 +87,7 @@ const Select: React.FC<SelectProps> = ({
           <ul className={styles.dropdownMenu} role="listbox">
             {options.map((option) => (
               <li
+              className={styles.selectOption}
                 key={option.value}
                 onClick={() => handleOptionClick(option)}
                 role="option"

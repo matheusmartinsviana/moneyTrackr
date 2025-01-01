@@ -3,6 +3,7 @@ import Select from "../shared/components/Select";
 import Button from "../shared/components/Button";
 import ReusableInput from "../shared/components/Input";
 import styles from "./styles/FinancesManagement.module.css";
+import { FaXmark } from "react-icons/fa6";
 
 // Helper Types
 interface Person {
@@ -34,6 +35,8 @@ const FinancesManagement: React.FC = () => {
 
   const [isActiveAddPerson, setIsActiveAddPerson] = useState(false);
   const [isActiveAddAccountType, setIsActiveAddAccountType] = useState(false);
+  const [isActiveDeleteAccoutType, setIsActiveDeleteAccountType] =
+    useState(false);
   const [personName, setPersonName] = useState("");
   const [accountName, setAccountName] = useState("");
   const [accountType, setAccountType] = useState("");
@@ -143,10 +146,14 @@ const FinancesManagement: React.FC = () => {
       <section className={styles.addAccountSection}>
         <h2>Adicionar Conta</h2>
         <Select
-          options={people.map((person) => ({
-            value: person.id,
-            label: person.name,
-          }))}
+          options={
+            people.length === 0
+              ? [{ value: "", label: "Não há pessoas disponíveis" }]
+              : people.map((person) => ({
+                  value: person.id,
+                  label: person.name,
+                }))
+          }
           onChange={(value) => setSelectedPerson(Number(value))}
           placeholder="Selecionar Pessoa"
         />
@@ -157,10 +164,14 @@ const FinancesManagement: React.FC = () => {
           placeholder="Digite o nome da conta"
         />
         <Select
-          options={accountTypes.map((type) => ({
-            value: type,
-            label: type,
-          }))}
+          options={
+            accountTypes.length === 0
+              ? [{ value: "", label: "Não há tipos de conta disponíveis" }]
+              : accountTypes.map((type) => ({
+                  value: type,
+                  label: type,
+                }))
+          }
           onChange={(value) => setAccountType(String(value))}
           placeholder="Selecionar Tipo de Conta"
         />
@@ -192,15 +203,41 @@ const FinancesManagement: React.FC = () => {
         <Button label="Adicionar Conta" onClick={addAccount} />
       </section>
 
-      <section className={styles.accountTypesSection}>
-        <h2>Tipos de Conta</h2>
-        {accountTypes.map((type, index) => (
-          <div key={index} className={styles.accountTypeItem}>
-            <span>{type}</span>
-            <Button label="Remover" onClick={() => removeAccountType(type)} />
+      {isActiveDeleteAccoutType ? (
+        <section className={styles.accountTypesSection}>
+          <div className={styles.headerAccountTypesSection}>
+            <h2>Tipos de Conta</h2>
+            <button
+              className={styles.closeButton}
+              onClick={() =>
+                setIsActiveDeleteAccountType(!isActiveDeleteAccoutType)
+              }
+            >
+              <FaXmark title="Fechar Tipos de Conta" size={17} />
+            </button>
           </div>
-        ))}
-      </section>
+          {accountTypes.length === 0 ? (
+            <p>Não há tipos de conta criados</p>
+          ) : (
+            accountTypes.map((type, index) => (
+              <div key={index} className={styles.accountTypeItem}>
+                <span>{type}</span>
+                <Button
+                  label="Remover"
+                  onClick={() => removeAccountType(type)}
+                />
+              </div>
+            ))
+          )}
+        </section>
+      ) : (
+        <Button
+          label="Ver todos os tipos de conta criados"
+          onClick={() =>
+            setIsActiveDeleteAccountType(!isActiveDeleteAccoutType)
+          }
+        />
+      )}
 
       <section className={styles.accountsByPersonSection}>
         <h2>Contas por Pessoa</h2>
