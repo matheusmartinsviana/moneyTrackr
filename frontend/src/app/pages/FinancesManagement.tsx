@@ -23,10 +23,12 @@ const FinancesManagement: React.FC = () => {
     const savedPeople = localStorage.getItem("people");
     return savedPeople ? JSON.parse(savedPeople) : [];
   });
+
   const [accounts, setAccounts] = useState<Account[]>(() => {
     const savedAccounts = localStorage.getItem("accounts");
     return savedAccounts ? JSON.parse(savedAccounts) : [];
   });
+
   const [accountTypes, setAccountTypes] = useState<string[]>(() => {
     const savedTypes = localStorage.getItem("accountTypes");
     return savedTypes ? JSON.parse(savedTypes) : [];
@@ -36,11 +38,15 @@ const FinancesManagement: React.FC = () => {
   const [isActiveAddAccountType, setIsActiveAddAccountType] = useState(false);
   const [isActiveDeleteAccoutType, setIsActiveDeleteAccountType] =
     useState(false);
+
   const [personName, setPersonName] = useState("");
   const [accountName, setAccountName] = useState("");
   const [accountType, setAccountType] = useState("");
   const [accountValue, setAccountValue] = useState<string>("");
   const [selectedPerson, setSelectedPerson] = useState<number | "">("");
+
+  // Estado para controle de edição
+  const [editingAccount, setEditingAccount] = useState<Account | null>(null);
 
   useEffect(() => {
     localStorage.setItem("people", JSON.stringify(people));
@@ -110,6 +116,28 @@ const FinancesManagement: React.FC = () => {
     return accounts
       .filter((account) => account.personId === personId)
       .reduce((total, account) => total + account.value, 0);
+  };
+
+  // Função para iniciar a edição de uma conta
+  const startEditingAccount = (account: Account) => {
+    setEditingAccount(account);
+  };
+
+  // Função para salvar a edição
+  const saveEditedAccount = () => {
+    if (editingAccount) {
+      setAccounts((prev) =>
+        prev.map((account) =>
+          account.id === editingAccount.id ? editingAccount : account
+        )
+      );
+      setEditingAccount(null); // Finalizar edição
+    }
+  };
+
+  // Função para cancelar a edição
+  const cancelEdit = () => {
+    setEditingAccount(null);
   };
 
   return (
@@ -253,21 +281,79 @@ const FinancesManagement: React.FC = () => {
                   {personAccounts.map((account) => (
                     <React.Fragment key={account.id}>
                       <div className={styles.customTableCell}>
-                        {account.name}
+                        {editingAccount?.id === account.id ? (
+                          <ReusableInput
+                            value={editingAccount.name}
+                            onChange={(e) =>
+                              setEditingAccount((prev) => ({
+                                ...prev!,
+                                name: e.target.value,
+                              }))
+                            }
+                          />
+                        ) : (
+                          account.name
+                        )}
                       </div>
+
                       <div className={styles.customTableCell}>
-                        {account.type}
+                        {editingAccount?.id === account.id ? (
+                          <ReusableInput
+                            value={editingAccount.type}
+                            onChange={(e) =>
+                              setEditingAccount((prev) => ({
+                                ...prev!,
+                                type: e.target.value,
+                              }))
+                            }
+                          />
+                        ) : (
+                          account.type
+                        )}
                       </div>
+
                       <div className={styles.customTableCell}>
-                        {account.value.toFixed(2)}
+                        {editingAccount?.id === account.id ? (
+                          <ReusableInput
+                            value={String(editingAccount.value)}
+                            type="number"
+                            onChange={(e) =>
+                              setEditingAccount((prev) => ({
+                                ...prev!,
+                                value: parseFloat(e.target.value),
+                              }))
+                            }
+                          />
+                        ) : (
+                          account.value.toFixed(2)
+                        )}
                       </div>
+
                       <div className={styles.customTableCell}>
-                        <button
-                          className={styles.deleteRowButton}
-                          onClick={() => deleteAccount(account.id)}
-                        >
-                          🗑️
-                        </button>
+                        {editingAccount?.id === account.id ? (
+                          <>
+                            <Button
+                              label="Salvar"
+                              onClick={saveEditedAccount}
+                            />
+                            <Button label="Cancelar" onClick={cancelEdit} />
+                          </>
+                        ) : (
+                          <button
+                            className={styles.deleteRowButton}
+                            onClick={() => deleteAccount(account.id)}
+                          >
+                            🗑️
+                          </button>
+                        )}
+                        {editingAccount?.id !== account.id && (
+                          <button
+                            className={styles.editRowButton}
+                            onClick={() => startEditingAccount(account)}
+                          >
+                            ✏️
+                          </button>
+                        )}
                       </div>
                     </React.Fragment>
                   ))}

@@ -19,7 +19,23 @@ ChartJS.register(
   Legend
 );
 
-const TotalSpendingChart = ({ accounts, accountTypes }) => {
+interface Account {
+  id: number;
+  name: string;
+  type: string;
+  value: number;
+  personId: number;
+}
+
+interface TotalSpendingChartProps {
+  accounts: Account[];
+  accountTypes: string[];
+}
+
+const TotalSpendingChart: React.FC<TotalSpendingChartProps> = ({
+  accounts,
+  accountTypes,
+}) => {
   const totalSpendingByType = accountTypes.map((type) => {
     return accounts
       .filter((account) => account.type.toLowerCase() === type.toLowerCase())
@@ -57,7 +73,7 @@ const TotalSpendingChart = ({ accounts, accountTypes }) => {
         text: "Gastos Totais por Tipo de Conta",
       },
       legend: {
-        position: "top",
+        position: "top" as const,
       },
     },
     scales: {

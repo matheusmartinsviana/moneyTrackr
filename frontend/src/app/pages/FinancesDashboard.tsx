@@ -2,10 +2,23 @@ import React, { useEffect, useState } from "react";
 import PersonSpendingChart from "./PersonSpendingChart";
 import TotalSpendingChart from "./TotalSpendingChart";
 
-const FinancesDashboard = () => {
-  const [people, setPeople] = useState([]);
-  const [accounts, setAccounts] = useState([]);
-  const [accountTypes, setAccountTypes] = useState([]);
+interface Person {
+  id: number;
+  name: string;
+}
+
+interface Account {
+  id: number;
+  name: string;
+  type: string;
+  value: number;
+  personId: number;
+}
+
+const FinancesDashboard: React.FC = () => {
+  const [people, setPeople] = useState<Person[]>([]);
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [accountTypes, setAccountTypes] = useState<string[]>([]);
 
   const loadDataFromLocalStorage = () => {
     const storedPeople = localStorage.getItem("people");

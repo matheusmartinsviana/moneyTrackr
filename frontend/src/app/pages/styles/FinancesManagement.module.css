@@ -13,7 +13,8 @@
   margin-bottom: 30px;
 }
 
-.deleteRowButton {
+.deleteRowButton,
+.editRowButton {
   background-color: transparent;
   border: none;
 }

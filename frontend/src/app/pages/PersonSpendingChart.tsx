@@ -19,8 +19,31 @@ ChartJS.register(
   Legend
 );
 
-const PersonSpendingChart = ({ people, accounts, accountTypes }) => {
-  const getPersonData = (personId) => {
+interface Person {
+  id: number;
+  name: string;
+}
+
+interface Account {
+  id: number;
+  name: string;
+  type: string;
+  value: number;
+  personId: number;
+}
+
+interface PersonSpendingChartProps {
+  people: Person[];
+  accounts: Account[];
+  accountTypes: string[];
+}
+
+const PersonSpendingChart: React.FC<PersonSpendingChartProps> = ({
+  people,
+  accounts,
+  accountTypes,
+}) => {
+  const getPersonData = (personId: number): number[] => {
     const personAccounts = accounts.filter(
       (account) => account.personId === personId
     );
@@ -54,7 +77,7 @@ const PersonSpendingChart = ({ people, accounts, accountTypes }) => {
         text: "Gastos por Pessoa e Tipo de Conta",
       },
       legend: {
-        position: "top",
+        position: "top" as const,
       },
     },
     scales: {
