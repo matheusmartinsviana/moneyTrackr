@@ -14,7 +14,7 @@ Este projeto está licenciado sob a licença [MIT](./LICENSE). Sinta-se à vonta
 
 ## Contato
 
-Tem dúvidas ou sugestões? Entre em contato:
+Tem dúvidas ou sugestões? Entre em contato comigo:
 - **E-mail**: matheusmviana@outlook.com.br
 - **LinkedIn**: [Matheus M. Viana](https://www.linkedin.com/in/matheusmartinsviana)
 - **GitHub**: [Matheus M. Viana](https://github.com/matheusmartinsviana)
