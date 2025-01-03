@@ -5,7 +5,6 @@ import ReusableInput from "../shared/components/Input";
 import styles from "./styles/FinancesManagement.module.css";
 import { FaXmark } from "react-icons/fa6";
 
-// Helper Types
 interface Person {
   id: number;
   name: string;
@@ -102,14 +101,6 @@ const FinancesManagement: React.FC = () => {
     setAccountTypes(updatedTypes);
     localStorage.setItem("accountTypes", JSON.stringify(updatedTypes));
   };
-
-  // const updateAccount = (id: number, field: keyof Account, value: number) => {
-  //   setAccounts((prev) =>
-  //     prev.map((account) =>
-  //       account.id === id ? { ...account, [field]: value } : account
-  //     )
-  //   );
-  // };
 
   const deleteAccount = (id: number) => {
     setAccounts((prev) => prev.filter((account) => account.id !== id));
@@ -251,7 +242,7 @@ const FinancesManagement: React.FC = () => {
               <h3>{person.name}</h3>
 
               {personAccounts.length === 0 ? (
-                <p>Não há contas ainda</p> // Show this message if no accounts exist for the person
+                <p>Não há contas ainda</p>
               ) : (
                 <div className={styles.customTable}>
                   <div className={styles.customTableHeader}>Conta</div>

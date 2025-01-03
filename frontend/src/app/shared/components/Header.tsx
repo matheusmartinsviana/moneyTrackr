@@ -9,7 +9,6 @@ const Header = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Atualiza largura da janela e estado de scroll
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -21,14 +20,12 @@ const Header = () => {
     window.addEventListener("resize", handleResize);
     window.addEventListener("scroll", handleScroll);
 
-    // Limpeza
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  // Alterna título apenas para telas maiores
   useEffect(() => {
     let interval: number | undefined;
 
@@ -37,7 +34,7 @@ const Header = () => {
         setShowTitle((prev) => !prev);
       }, 5000);
     } else {
-      setShowTitle(true); // Certifique-se de exibir o título em telas menores
+      setShowTitle(true);
     }
 
     return () => {
