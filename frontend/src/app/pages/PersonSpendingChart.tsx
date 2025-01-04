@@ -1,5 +1,5 @@
 import React from "react";
-import { Chart } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -97,7 +97,7 @@ const PersonSpendingChart: React.FC<PersonSpendingChartProps> = ({
     },
   };
 
-  return <Chart type="bar" data={personData} options={options} />;
+  return <Bar data={personData} options={options} />;
 };
 
 export default PersonSpendingChart;
