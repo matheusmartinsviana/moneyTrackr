@@ -4,6 +4,7 @@ import Button from "../shared/components/Button";
 import ReusableInput from "../shared/components/Input";
 import styles from "./styles/FinancesManagement.module.css";
 import { FaXmark } from "react-icons/fa6";
+import GeneralTable from "../shared/components/GeneralTable";
 
 interface Person {
   id: number;
@@ -44,9 +45,8 @@ const FinancesManagement: React.FC = () => {
   const [accountType, setAccountType] = useState("");
   const [accountValue, setAccountValue] = useState<string>("");
   const [selectedPerson, setSelectedPerson] = useState<number | "">("");
-
-  // Estado para controle de edição
   const [editingAccount, setEditingAccount] = useState<Account | null>(null);
+  const [newAccountType, setNewAccountType] = useState<string>("");
 
   useEffect(() => {
     localStorage.setItem("people", JSON.stringify(people));
@@ -118,12 +118,10 @@ const FinancesManagement: React.FC = () => {
       .reduce((total, account) => total + account.value, 0);
   };
 
-  // Função para iniciar a edição de uma conta
   const startEditingAccount = (account: Account) => {
     setEditingAccount(account);
   };
 
-  // Função para salvar a edição
   const saveEditedAccount = () => {
     if (editingAccount) {
       setAccounts((prev) =>
@@ -131,11 +129,10 @@ const FinancesManagement: React.FC = () => {
           account.id === editingAccount.id ? editingAccount : account
         )
       );
-      setEditingAccount(null); // Finalizar edição
+      setEditingAccount(null);
     }
   };
 
-  // Função para cancelar a edição
   const cancelEdit = () => {
     setEditingAccount(null);
   };
@@ -195,16 +192,17 @@ const FinancesManagement: React.FC = () => {
           placeholder="Selecionar Tipo de Conta"
         />
         {isActiveAddAccountType ? (
-          <ReusableInput
-            label="Novo Tipo de Conta"
-            placeholder="Digite o novo tipo e pressione Enter"
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                addAccountType(e.currentTarget.value);
-                e.currentTarget.value = "";
-              }
-            }}
-          />
+          <>
+            <ReusableInput
+              label="Novo Tipo de Conta"
+              placeholder="Digite o novo tipo e pressione Enter"
+              onChange={(e) => setNewAccountType(e.target.value)}
+            />
+            <Button
+              label="Adicionar Tipo de Conta"
+              onClick={() => addAccountType(newAccountType)}
+            />
+          </>
         ) : (
           <Button
             label="Adicionar Tipo de Conta"
@@ -260,113 +258,7 @@ const FinancesManagement: React.FC = () => {
 
       <section className={styles.accountsByPersonSection}>
         <h2>Contas por Pessoa</h2>
-        {people.map((person) => {
-          const personAccounts = accounts.filter(
-            (account) => account.personId === person.id
-          );
-
-          return (
-            <div key={person.id} className={styles.personAccounts}>
-              <h3>{person.name}</h3>
-
-              {personAccounts.length === 0 ? (
-                <p>Não há contas ainda</p>
-              ) : (
-                <div className={styles.customTable}>
-                  <div className={styles.customTableHeader}>Conta</div>
-                  <div className={styles.customTableHeader}>Tipo da Conta</div>
-                  <div className={styles.customTableHeader}>Valor</div>
-                  <div className={styles.customTableHeader}>Ações</div>
-
-                  {personAccounts.map((account) => (
-                    <React.Fragment key={account.id}>
-                      <div className={styles.customTableCell}>
-                        {editingAccount?.id === account.id ? (
-                          <ReusableInput
-                            value={editingAccount.name}
-                            onChange={(e) =>
-                              setEditingAccount((prev) => ({
-                                ...prev!,
-                                name: e.target.value,
-                              }))
-                            }
-                          />
-                        ) : (
-                          account.name
-                        )}
-                      </div>
-
-                      <div className={styles.customTableCell}>
-                        {editingAccount?.id === account.id ? (
-                          <ReusableInput
-                            value={editingAccount.type}
-                            onChange={(e) =>
-                              setEditingAccount((prev) => ({
-                                ...prev!,
-                                type: e.target.value,
-                              }))
-                            }
-                          />
-                        ) : (
-                          account.type
-                        )}
-                      </div>
-
-                      <div className={styles.customTableCell}>
-                        {editingAccount?.id === account.id ? (
-                          <ReusableInput
-                            value={String(editingAccount.value)}
-                            type="number"
-                            onChange={(e) =>
-                              setEditingAccount((prev) => ({
-                                ...prev!,
-                                value: parseFloat(e.target.value),
-                              }))
-                            }
-                          />
-                        ) : (
-                          account.value.toFixed(2)
-                        )}
-                      </div>
-
-                      <div className={styles.customTableCell}>
-                        {editingAccount?.id === account.id ? (
-                          <>
-                            <Button
-                              label="Salvar"
-                              onClick={saveEditedAccount}
-                            />
-                            <Button label="Cancelar" onClick={cancelEdit} />
-                          </>
-                        ) : (
-                          <button
-                            className={styles.deleteRowButton}
-                            onClick={() => deleteAccount(account.id)}
-                          >
-                            🗑️
-                          </button>
-                        )}
-                        {editingAccount?.id !== account.id && (
-                          <button
-                            className={styles.editRowButton}
-                            onClick={() => startEditingAccount(account)}
-                          >
-                            ✏️
-                          </button>
-                        )}
-                      </div>
-                    </React.Fragment>
-                  ))}
-                </div>
-              )}
-
-              <div>
-                <strong>Total:</strong> R${" "}
-                {getTotalByPerson(person.id).toFixed(2)}
-              </div>
-            </div>
-          );
-        })}
+        <GeneralTable />
       </section>
     </div>
   );
