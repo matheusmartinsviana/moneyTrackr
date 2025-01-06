@@ -1,0 +1,28 @@
+.customTable {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+  gap: 10px;
+  background-color: white;
+  border: 1px solid rgba(128, 128, 128, 0.418);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.customTableHeader {
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.customTableRow {
+  display: contents; /* Mantém o layout de grid */
+}
+
+.customTableCell {
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.customTableCell button {
+  cursor: pointer;
+}
