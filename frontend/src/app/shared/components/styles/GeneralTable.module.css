@@ -26,3 +26,9 @@
 .customTableCell button {
   cursor: pointer;
 }
+
+.deleteRowButton,
+.editRowButton {
+  background-color: transparent;
+  border: none;
+}

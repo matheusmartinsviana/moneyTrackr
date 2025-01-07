@@ -29,12 +29,6 @@
   transition: all ease-in-out 0.3s;
 }
 
-.deleteRowButton,
-.editRowButton {
-  background-color: transparent;
-  border: none;
-}
-
 .accountTypeItem {
   display: flex;
   justify-content: space-between;

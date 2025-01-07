@@ -45,7 +45,6 @@ const FinancesManagement: React.FC = () => {
   const [accountType, setAccountType] = useState("");
   const [accountValue, setAccountValue] = useState<string>("");
   const [selectedPerson, setSelectedPerson] = useState<number | "">("");
-  const [editingAccount, setEditingAccount] = useState<Account | null>(null);
   const [newAccountType, setNewAccountType] = useState<string>("");
 
   useEffect(() => {
@@ -106,35 +105,6 @@ const FinancesManagement: React.FC = () => {
     const updatedTypes = accountTypes.filter((t) => t !== type);
     setAccountTypes(updatedTypes);
     localStorage.setItem("accountTypes", JSON.stringify(updatedTypes));
-  };
-
-  const deleteAccount = (id: number) => {
-    setAccounts((prev) => prev.filter((account) => account.id !== id));
-  };
-
-  const getTotalByPerson = (personId: number): number => {
-    return accounts
-      .filter((account) => account.personId === personId)
-      .reduce((total, account) => total + account.value, 0);
-  };
-
-  const startEditingAccount = (account: Account) => {
-    setEditingAccount(account);
-  };
-
-  const saveEditedAccount = () => {
-    if (editingAccount) {
-      setAccounts((prev) =>
-        prev.map((account) =>
-          account.id === editingAccount.id ? editingAccount : account
-        )
-      );
-      setEditingAccount(null);
-    }
-  };
-
-  const cancelEdit = () => {
-    setEditingAccount(null);
   };
 
   return (
