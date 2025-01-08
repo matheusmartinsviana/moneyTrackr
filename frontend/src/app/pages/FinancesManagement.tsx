@@ -227,7 +227,6 @@ const FinancesManagement: React.FC = () => {
       )}
 
       <section className={styles.accountsByPersonSection}>
-        <h2>Contas por Pessoa</h2>
         <GeneralTable />
       </section>
     </div>

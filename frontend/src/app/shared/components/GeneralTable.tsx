@@ -76,6 +76,7 @@ const GeneralTable: React.FC = () => {
 
   return (
     <div>
+      <h2>Contas por Pessoa</h2>
       {people.map((person) => {
         const personAccounts = getAccountsByPerson(person.id);
 
