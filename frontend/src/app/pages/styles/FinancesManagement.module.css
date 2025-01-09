@@ -77,17 +77,25 @@
   border: none;
 }
 
+.xButtonAccountType svg {
+  margin-top: 2px;
+  color: #000;
+  font-size: 14px;
+}
+
 .spanAccountType {
   min-width: 40px;
+  white-space: nowrap;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 4px;
   font-weight: 500;
   border: 1px solid rgb(186, 186, 186);
-  padding: 0 5px;
+  padding: 4px 8px;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: all ease-in-out 0.3s;
 }
 
 .errorMessage {
