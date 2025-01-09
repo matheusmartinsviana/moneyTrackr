@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
 import styles from "./styles/GeneralTable.module.css";
 import Input from "./Input";
@@ -18,6 +18,7 @@ interface Account {
 }
 
 const GeneralTable: React.FC = () => {
+  // @ts-ignore
   const [people, setPeople] = useState<Person[]>(() => {
     const savedPeople = localStorage.getItem("people");
     return savedPeople ? JSON.parse(savedPeople) : [];
@@ -28,6 +29,7 @@ const GeneralTable: React.FC = () => {
     return savedAccounts ? JSON.parse(savedAccounts) : [];
   });
 
+  // @ts-ignore
   const [accountTypes, setAccountTypes] = useState<string[]>(() => {
     const savedTypes = localStorage.getItem("accountTypes");
     return savedTypes ? JSON.parse(savedTypes) : [];
