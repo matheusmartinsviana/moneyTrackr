@@ -1,3 +1,4 @@
 .homeContainer{
-    height: 10000vh;
+    min-height: 100vh;
+    padding: 20px;
 }

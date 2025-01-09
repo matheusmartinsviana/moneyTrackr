@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styles from "./styles/Header.module.css";
 import { Link } from "react-router-dom";
 import { MdDashboardCustomize } from "react-icons/md";
-import { GrAnalytics } from "react-icons/gr";
+import { GrAnalytics, GrHomeRounded } from "react-icons/gr";
 
 const Header = () => {
   const [showTitle, setShowTitle] = useState(true);
@@ -70,6 +70,9 @@ const Header = () => {
           </nav>
         ) : (
           <nav className={styles.navbarContainer}>
+            <Link to="/">
+              <GrHomeRounded />
+            </Link>
             <Link to="/gerenciar-financias">
               <MdDashboardCustomize />
             </Link>

@@ -1,6 +1,6 @@
 .customTable {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 colunas */
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   background-color: white;
   border: 1px solid rgba(128, 128, 128, 0.418);
@@ -13,9 +13,12 @@
   padding: 10px;
   border-radius: 5px;
 }
-
+.customTableCell input {
+  max-width: 150px;
+  font-size: 14px;
+}
 .customTableRow {
-  display: contents; /* Mantém o layout de grid */
+  display: contents;
 }
 
 .customTableCell {
@@ -31,4 +34,53 @@
 .editRowButton {
   background-color: transparent;
   border: none;
+}
+
+.deleteRowButton svg {
+  color: rgb(191, 0, 0);
+  font-size: 20px;
+  transition: all ease-in-out 0.2s;
+}
+.deleteRowButton svg:hover {
+  color: rgba(191, 0, 0, 0.7);
+}
+
+.editRowButton svg {
+  font-size: 20px;
+  color: rgb(37, 37, 37);
+  transition: all ease-in-out 0.2s;
+}
+.editRowButton svg:hover {
+  color: rgba(37, 37, 37, 0.719);
+  font-size: 20px;
+}
+.editRowButton {
+  margin-left: 9px;
+}
+
+.confirmationActions {
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  gap: 5px;
+}
+
+@media screen and (max-width: 768px) {
+  .customTable {
+    grid-template-columns: 1fr;
+  }
+
+  .customTableHeader {
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .customTable {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .customTableHeader {
+    font-size: 1rem;
+  }
 }
