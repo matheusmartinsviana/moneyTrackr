@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PersonSpendingChart from "./PersonSpendingChart";
 import TotalSpendingChart from "./TotalSpendingChart";
+import styles from "./styles/FinancesDashboard.module.css";
 
 interface Person {
   id: number;
@@ -39,19 +40,19 @@ const FinancesDashboard: React.FC = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Dashboard de Finanças</h1>
+    <div className={styles.container}>
+      <h1 className={styles.heading}>Dashboard de Finanças</h1>
       {people.length > 0 && accounts.length > 0 && accountTypes.length > 0 ? (
-        <>
+        <div className={styles.chartContainer}>
           <PersonSpendingChart
             people={people}
             accounts={accounts}
             accountTypes={accountTypes}
           />
           <TotalSpendingChart accounts={accounts} accountTypes={accountTypes} />
-        </>
+        </div>
       ) : (
-        <p>Carregando dados...</p>
+        <p className={styles.loadingText}>Carregando dados...</p>
       )}
     </div>
   );
