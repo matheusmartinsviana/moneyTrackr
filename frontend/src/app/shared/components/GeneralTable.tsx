@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./styles/GeneralTable.module.css";
 import Input from "./Input";
 import Button from "./Button";
+import { HiOutlinePencilSquare } from "react-icons/hi2";
+import { BsTrash3 } from "react-icons/bs";
 
 interface Person {
   id: number;
@@ -147,23 +149,23 @@ const GeneralTable: React.FC = () => {
 
                     <div className={styles.customTableCell}>
                       {editingAccount?.id === account.id ? (
-                        <>
+                        <div className={styles.confirmationActions}>
                           <Button label="Salvar" onClick={saveEditedAccount} />
                           <Button label="Cancelar" onClick={cancelEdit} />
-                        </>
+                        </div>
                       ) : (
                         <>
                           <button
                             className={styles.deleteRowButton}
                             onClick={() => deleteAccount(account.id)}
                           >
-                            🗑️
+                            <BsTrash3 />
                           </button>
                           <button
                             className={styles.editRowButton}
                             onClick={() => startEditingAccount(account)}
                           >
-                            ✏️
+                            <HiOutlinePencilSquare />
                           </button>
                         </>
                       )}
