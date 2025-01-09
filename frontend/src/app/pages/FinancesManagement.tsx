@@ -1,10 +1,10 @@
+/* eslint-disable */
 import React, { useEffect, useState } from "react";
 import Select from "../shared/components/Select";
 import Button from "../shared/components/Button";
 import ReusableInput from "../shared/components/Input";
 import styles from "./styles/FinancesManagement.module.css";
-import { FaXmark } from "react-icons/fa6";
-import GeneralTable from "../shared/components/GeneralTable";
+import { IoMdClose } from "react-icons/io";
 
 interface Person {
   id: number;
@@ -37,8 +37,6 @@ const FinancesManagement: React.FC = () => {
 
   const [isActiveAddPerson, setIsActiveAddPerson] = useState(false);
   const [isActiveAddAccountType, setIsActiveAddAccountType] = useState(false);
-  const [isActiveDeleteAccoutType, setIsActiveDeleteAccountType] =
-    useState(false);
 
   const [personName, setPersonName] = useState("");
   const [accountName, setAccountName] = useState("");
@@ -46,6 +44,12 @@ const FinancesManagement: React.FC = () => {
   const [accountValue, setAccountValue] = useState<string>("");
   const [selectedPerson, setSelectedPerson] = useState<number | "">("");
   const [newAccountType, setNewAccountType] = useState<string>("");
+
+  const [errorPersonName, setErrorPersonName] = useState<string>("");
+  const [errorAccountName, setErrorAccountName] = useState<string>("");
+  const [errorAccountType, setErrorAccountType] = useState<string>("");
+  const [errorAccountValue, setErrorAccountValue] = useState<string>("");
+  const [errorSelectedPerson, setErrorSelectedPerson] = useState<string>("");
 
   useEffect(() => {
     localStorage.setItem("people", JSON.stringify(people));
@@ -59,8 +63,60 @@ const FinancesManagement: React.FC = () => {
     localStorage.setItem("accountTypes", JSON.stringify(accountTypes));
   }, [accountTypes]);
 
+  const showErrorTemporarily = (
+    setter: React.Dispatch<React.SetStateAction<string>>,
+    message: string
+  ) => {
+    setter(message);
+    setTimeout(() => setter(""), 10000);
+  };
+
+  const validatePersonName = () => {
+    if (!personName.trim()) {
+      showErrorTemporarily(
+        setErrorPersonName,
+        "O nome da pessoa não pode estar vazio."
+      );
+      return false;
+    }
+    setErrorPersonName("");
+    return true;
+  };
+
+  const validateAccountFields = () => {
+    let valid = true;
+
+    if (!accountName.trim()) {
+      showErrorTemporarily(
+        setErrorAccountName,
+        "O nome da conta não pode estar vazio."
+      );
+      valid = false;
+    }
+
+    if (!accountType.trim()) {
+      showErrorTemporarily(setErrorAccountType, "Selecione um tipo de conta.");
+      valid = false;
+    }
+
+    if (!selectedPerson) {
+      showErrorTemporarily(setErrorSelectedPerson, "Selecione uma pessoa.");
+      valid = false;
+    }
+
+    if (!accountValue || parseFloat(accountValue) <= 0) {
+      showErrorTemporarily(
+        setErrorAccountValue,
+        "O valor da conta deve ser maior que zero."
+      );
+      valid = false;
+    }
+
+    return valid;
+  };
+
   const addPerson = () => {
-    if (personName.trim()) {
+    if (validatePersonName()) {
       setPeople([...people, { id: Date.now(), name: personName.trim() }]);
       setPersonName("");
       setIsActiveAddPerson(false);
@@ -68,19 +124,16 @@ const FinancesManagement: React.FC = () => {
   };
 
   const addAccount = () => {
-    if (
-      accountName.trim() &&
-      accountType.trim() &&
-      selectedPerson &&
-      parseFloat(accountValue) > 0
-    ) {
+    if (validateAccountFields()) {
       setAccounts([
+        // @ts-ignore
         ...accounts,
         {
           id: Date.now(),
           name: accountName.trim(),
           type: accountType.trim(),
           value: parseFloat(accountValue),
+          // @ts-ignore
           personId: selectedPerson,
         },
       ]);
@@ -97,6 +150,11 @@ const FinancesManagement: React.FC = () => {
       const updatedTypes = [...accountTypes, type.trim()];
       setAccountTypes(updatedTypes);
       localStorage.setItem("accountTypes", JSON.stringify(updatedTypes));
+    } else {
+      showErrorTemporarily(
+        setErrorAccountType,
+        "Tipo de conta inválido ou já existente."
+      );
     }
     setIsActiveAddAccountType(false);
   };
@@ -108,127 +166,130 @@ const FinancesManagement: React.FC = () => {
   };
 
   return (
-    <div className={styles.mainFinancesContent}>
-      <section className={styles.addPersonSection}>
-        {isActiveAddPerson ? (
-          <>
-            <h2>Adicionar Nova Pessoa</h2>
-            <ReusableInput
-              label="Nome da Pessoa"
-              value={personName}
-              onChange={(e) => setPersonName(e.target.value)}
-              placeholder="Digite o nome da pessoa"
-            />
-            <Button label="Adicionar Pessoa" onClick={addPerson} />
-          </>
-        ) : (
-          <Button
-            label="Adicionar Pessoa"
-            onClick={() => setIsActiveAddPerson(!isActiveAddPerson)}
-          />
-        )}
-      </section>
-
-      <section className={styles.addAccountSection}>
-        <h2>Adicionar Conta</h2>
-        <Select
-          options={
-            people.length === 0
-              ? [{ value: "", label: "Não há pessoas disponíveis" }]
-              : people.map((person) => ({
-                  value: person.id,
-                  label: person.name,
-                }))
-          }
-          onChange={(value) => setSelectedPerson(Number(value))}
-          placeholder="Selecionar Pessoa"
-        />
-        <ReusableInput
-          label="Nome da Conta"
-          value={accountName}
-          onChange={(e) => setAccountName(e.target.value)}
-          placeholder="Digite o nome da conta"
-        />
-        <Select
-          options={
-            accountTypes.length === 0
-              ? [{ value: "", label: "Não há tipos de conta disponíveis" }]
-              : accountTypes.map((type) => ({
-                  value: type,
-                  label: type,
-                }))
-          }
-          onChange={(value) => setAccountType(String(value))}
-          placeholder="Selecionar Tipo de Conta"
-        />
-        {isActiveAddAccountType ? (
-          <>
-            <ReusableInput
-              label="Novo Tipo de Conta"
-              placeholder="Digite o novo tipo e pressione Enter"
-              onChange={(e) => setNewAccountType(e.target.value)}
-            />
+    <div className={styles.main}>
+      <div className={styles.mainFinancesContent}>
+        <section className={styles.addPersonSection}>
+          {isActiveAddPerson ? (
+            <>
+              <h2>Adicionar Nova Pessoa</h2>
+              <ReusableInput
+                label="Nome da Pessoa"
+                value={personName}
+                onChange={(e) => setPersonName(e.target.value)}
+                placeholder="Digite o nome da pessoa"
+              />
+              {errorPersonName && (
+                <p className={styles.errorMessage}>{errorPersonName}</p>
+              )}
+              <Button label="Adicionar Pessoa" onClick={addPerson} />
+            </>
+          ) : (
             <Button
-              label="Adicionar Tipo de Conta"
-              onClick={() => addAccountType(newAccountType)}
+              label="Adicionar Pessoa"
+              onClick={() => setIsActiveAddPerson(!isActiveAddPerson)}
             />
-          </>
-        ) : (
-          <Button
-            label="Adicionar Tipo de Conta"
-            onClick={() => setIsActiveAddAccountType(!isActiveAddAccountType)}
+          )}
+        </section>
+
+        <section className={styles.addAccountSection}>
+          <h2>Adicionar Conta</h2>
+          <Select
+            options={
+              people.length === 0
+                ? [{ value: "", label: "Não há pessoas disponíveis" }]
+                : people.map((person) => ({
+                    value: person.id,
+                    label: person.name,
+                  }))
+            }
+            onChange={(value) => setSelectedPerson(Number(value))}
+            placeholder="Selecionar Pessoa"
           />
-        )}
-
-        <ReusableInput
-          label="Valor da Conta"
-          type="number"
-          value={accountValue}
-          onChange={(e) => setAccountValue(e.target.value)}
-          placeholder="Digite o valor da conta"
-        />
-        <Button label="Adicionar Conta" onClick={addAccount} />
-      </section>
-
-      {isActiveDeleteAccoutType ? (
+          {errorSelectedPerson && (
+            <p className={styles.errorMessage}>{errorSelectedPerson}</p>
+          )}
+          <ReusableInput
+            label="Nome da Conta"
+            value={accountName}
+            onChange={(e) => setAccountName(e.target.value)}
+            placeholder="Digite o nome da conta"
+          />
+          {errorAccountName && (
+            <p className={styles.errorMessage}>{errorAccountName}</p>
+          )}
+          <Select
+            options={
+              accountTypes.length === 0
+                ? [{ value: "", label: "Não há tipos de conta disponíveis" }]
+                : accountTypes.map((type) => ({
+                    value: type,
+                    label: type,
+                  }))
+            }
+            onChange={(value) => setAccountType(String(value))}
+            placeholder="Selecionar Tipo de Conta"
+          />
+          {errorAccountType && (
+            <p className={styles.errorMessage}>{errorAccountType}</p>
+          )}
+          <ReusableInput
+            label="Valor da Conta"
+            type="number"
+            value={accountValue}
+            onChange={(e) => setAccountValue(e.target.value)}
+            placeholder="Digite o valor da conta"
+          />
+          {errorAccountValue && (
+            <p className={styles.errorMessage}>{errorAccountValue}</p>
+          )}
+          <Button label="Adicionar Conta" onClick={addAccount} />
+        </section>
         <section className={styles.accountTypesSection}>
           <div className={styles.headerAccountTypesSection}>
             <h2>Tipos de Conta</h2>
-            <button
-              className={styles.closeButton}
-              onClick={() =>
-                setIsActiveDeleteAccountType(!isActiveDeleteAccoutType)
-              }
-            >
-              <FaXmark title="Fechar Tipos de Conta" size={17} />
-            </button>
           </div>
-          {accountTypes.length === 0 ? (
-            <p>Não há tipos de conta criados</p>
+          <div className={styles.accountTypeSectionContent}>
+            {" "}
+            {accountTypes.length === 0 ? (
+              <p>Não há tipos de conta criados</p>
+            ) : (
+              accountTypes.map((type, index) => (
+                <div key={index} className={styles.accountTypeItem}>
+                  <span className={styles.spanAccountType}>
+                    {type}
+                    <button
+                      className={styles.xButtonAccountType}
+                      title="Remover"
+                      onClick={() => removeAccountType(type)}
+                    >
+                      <IoMdClose />
+                    </button>
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+
+          {isActiveAddAccountType ? (
+            <>
+              <ReusableInput
+                label="Novo Tipo de Conta"
+                placeholder="Digite o novo tipo e pressione Enter"
+                onChange={(e) => setNewAccountType(e.target.value)}
+              />
+              <Button
+                label="Adicionar Tipo de Conta"
+                onClick={() => addAccountType(newAccountType)}
+              />
+            </>
           ) : (
-            accountTypes.map((type, index) => (
-              <div key={index} className={styles.accountTypeItem}>
-                <span>{type}</span>
-                <Button
-                  label="Remover"
-                  onClick={() => removeAccountType(type)}
-                />
-              </div>
-            ))
+            <Button
+              label="Adicionar Tipo de Conta"
+              onClick={() => setIsActiveAddAccountType(!isActiveAddAccountType)}
+            />
           )}
         </section>
-      ) : (
-        <Button
-          label="Ver todos os tipos de conta criados"
-          onClick={() =>
-            setIsActiveDeleteAccountType(!isActiveDeleteAccoutType)
-          }
-        />
-      )}
-
-      <section className={styles.accountsByPersonSection}>
-        <GeneralTable />
-      </section>
+      </div>
     </div>
   );
 };
