@@ -9,6 +9,7 @@ const Earnings: React.FC = () => {
   >([]);
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const storedEarnings = localStorage.getItem("earnings");
@@ -31,7 +32,7 @@ const Earnings: React.FC = () => {
       setValue("");
       setDescription("");
     } else {
-      alert("Preencha ambos os campos!");
+      setErrorMessage("Preencha ambos os campos!");
     }
   };
 
@@ -56,6 +57,7 @@ const Earnings: React.FC = () => {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />
+        {errorMessage && <p className="errorMessage">{errorMessage}</p>}
         <Button label="Adicionar" onClick={addEarning} />
       </div>
       <ul>

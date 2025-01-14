@@ -31,3 +31,15 @@ a,
 svg {
   -webkit-tap-highlight-color: transparent;
 }
+
+.errorMessage {
+  font-weight: 600;
+  font-size: 14px;
+  color: rgb(200, 0, 0);
+  max-width: 400px;
+  margin-bottom: 10px;
+  display: flex;
+  height: 20px;
+  align-items: center;
+  transition: opacity 0.3s ease;
+}
