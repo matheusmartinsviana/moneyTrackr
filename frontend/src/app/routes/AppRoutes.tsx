@@ -1,9 +1,9 @@
 import React, { lazy } from "react";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Error404 from "../pages/Error404";
+import FinancesDashboard from "../pages/FinancesDashboard";
 import { Body } from "../shared/components/Body";
 import FinancesManagement from "../pages/FinancesManagement";
-import FinancesDashboard from "../pages/FinancesDashboard";
-import Error404 from "../pages/Error404";
 const Home = lazy(() => import("../pages/Home")); //lazy permite carregar componentes sob demanda
 
 // Simulando um atraso na importação do componente para forçar o loading
