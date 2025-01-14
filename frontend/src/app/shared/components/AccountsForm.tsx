@@ -175,48 +175,46 @@ const AccountsForm: React.FC = () => {
     <div className={styles.main}>
       <div className={styles.mainFinancesContent}>
         <section className={styles.addPersonSection}>
-          <>
-            <h2>Pessoas/Responsáveis</h2>
-            <div className={styles.accountTypeSectionContent}>
-              {people.length === 0 ? (
-                <p>Você ainda não registrou nenhuma pessoa</p>
-              ) : (
-                people.map((person) => (
-                  <div key={person.id} className={styles.accountTypeItem}>
-                    <span className={styles.spanAccountType}>
-                      {person.name}
-                      <button
-                        className={styles.xButtonAccountType}
-                        title="Remover"
-                        onClick={() => removePerson(person.id)}
-                      >
-                        <IoMdClose />
-                      </button>
-                    </span>
-                  </div>
-                ))
-              )}
-            </div>
-            {isActiveAddPerson ? (
-              <>
-                <ReusableInput
-                  label="Nome da Pessoa"
-                  value={personName}
-                  onChange={(e) => setPersonName(e.target.value)}
-                  placeholder="Digite o nome da pessoa"
-                />
-                {errorPersonName && (
-                  <p className={styles.errorMessage}>{errorPersonName}</p>
-                )}
-                <Button label="Adicionar Pessoa" onClick={addPerson} />
-              </>
+          <h2>Pessoas/Responsáveis</h2>
+          <div className={styles.accountTypeSectionContent}>
+            {people.length === 0 ? (
+              <p>Você ainda não registrou nenhuma pessoa</p>
             ) : (
-              <Button
-                label="Adicionar Pessoa"
-                onClick={() => setIsActiveAddPerson(!isActiveAddPerson)}
-              />
+              people.map((person) => (
+                <div key={person.id} className={styles.accountTypeItem}>
+                  <span className={styles.spanAccountType}>
+                    {person.name}
+                    <button
+                      className={styles.xButtonAccountType}
+                      title="Remover"
+                      onClick={() => removePerson(person.id)}
+                    >
+                      <IoMdClose />
+                    </button>
+                  </span>
+                </div>
+              ))
             )}
-          </>
+          </div>
+          {isActiveAddPerson ? (
+            <>
+              <ReusableInput
+                label="Nome da Pessoa"
+                value={personName}
+                onChange={(e) => setPersonName(e.target.value)}
+                placeholder="Digite o nome da pessoa"
+              />
+              {errorPersonName && (
+                <p className={styles.errorMessage}>{errorPersonName}</p>
+              )}
+              <Button label="Adicionar Pessoa" onClick={addPerson} />
+            </>
+          ) : (
+            <Button
+              label="Adicionar Pessoa"
+              onClick={() => setIsActiveAddPerson(!isActiveAddPerson)}
+            />
+          )}
         </section>
 
         <section className={styles.addAccountSection}>

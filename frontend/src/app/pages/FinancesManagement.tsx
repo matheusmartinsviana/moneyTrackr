@@ -9,10 +9,13 @@ const FinancesManagement: React.FC = () => {
 
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
-    newAlignment: string
+    newAlignment: string | null
   ) => {
-    setAlignment(newAlignment);
+    if (newAlignment !== null) {
+      setAlignment(newAlignment);
+    }
   };
+
   return (
     <section className={styles.toggleButtonSection}>
       <ToggleButtonGroup
@@ -22,8 +25,12 @@ const FinancesManagement: React.FC = () => {
         onChange={handleChange}
         aria-label="Platform"
       >
-        <ToggleButton value="accounts">Contas</ToggleButton>
-        <ToggleButton value="earnings">Ganhos</ToggleButton>
+        <ToggleButton value="accounts" disabled={alignment === "accounts"}>
+          Contas
+        </ToggleButton>
+        <ToggleButton value="earnings" disabled={alignment === "earnings"}>
+          Ganhos
+        </ToggleButton>
       </ToggleButtonGroup>
 
       <div style={{ marginTop: "20px" }}>
