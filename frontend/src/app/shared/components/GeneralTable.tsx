@@ -79,7 +79,7 @@ const GeneralTable: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className={styles.generalTableContainer}>
       <h2>Contas por Pessoa</h2>
       {people.map((person) => {
         const personAccounts = getAccountsByPerson(person.id);

@@ -8,7 +8,7 @@ const FinancesManagement: React.FC = () => {
   const [alignment, setAlignment] = React.useState("accounts");
 
   const handleChange = (
-    event: React.MouseEvent<HTMLElement>,
+    _event: React.MouseEvent<HTMLElement>,
     newAlignment: string | null
   ) => {
     if (newAlignment !== null) {
