@@ -1,23 +1,37 @@
 .generalTableContainer {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: space-between;
   flex-direction: column;
 }
-
 .customTable {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  overflow-x: scroll;
+}
+
+.customTable header {
+  display: flex;
   gap: 10px;
-  background-color: white;
-  border: 1px solid rgba(128, 128, 128, 0.418);
   border-radius: 10px;
   padding: 10px;
+  justify-content: space-between;
+}
+
+.customTable body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .customTableHeader {
   font-weight: bold;
+  width: 120px;
   padding: 10px;
+  display: flex;
+  justify-content: flex-start;
   border-radius: 5px;
 }
 .customTableCell input {
@@ -25,7 +39,17 @@
   font-size: 14px;
 }
 .customTableRow {
-  display: contents;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  padding: 10px;
+}
+.customTableCell {
+  width: 120px;
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+  border-radius: 5px;
 }
 
 .customTableCell {
@@ -67,27 +91,7 @@
 
 .confirmationActions {
   display: flex;
-  align-items: start;
-  justify-content: start;
+  align-items: center;
+  justify-content: center;
   gap: 5px;
-}
-
-@media screen and (max-width: 768px) {
-  .customTable {
-    grid-template-columns: 1fr;
-  }
-
-  .customTableHeader {
-    font-size: 0.9rem;
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  .customTable {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .customTableHeader {
-    font-size: 1rem;
-  }
 }

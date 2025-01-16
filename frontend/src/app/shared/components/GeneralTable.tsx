@@ -14,6 +14,7 @@ interface Person {
 interface Account {
   id: number;
   name: string;
+  status: boolean;
   type: string;
   value: number;
   personId: number;
@@ -92,86 +93,116 @@ const GeneralTable: React.FC = () => {
               <p>Não há contas ainda</p>
             ) : (
               <div className={styles.customTable}>
-                <div className={styles.customTableHeader}>Conta</div>
-                <div className={styles.customTableHeader}>Tipo da Conta</div>
-                <div className={styles.customTableHeader}>Valor</div>
-                <div className={styles.customTableHeader}>Ações</div>
+                <header>
+                  <div className={styles.customTableHeader}>Conta</div>
+                  <div className={styles.customTableHeader}>Status</div>
+                  <div className={styles.customTableHeader}>Tipo Conta</div>
+                  <div className={styles.customTableHeader}>Valor</div>
+                  <div className={styles.customTableHeader}>Ações</div>
+                </header>
 
-                {personAccounts.map((account) => (
-                  <div key={account.id} className={styles.customTableRow}>
-                    <div className={styles.customTableCell}>
-                      {editingAccount?.id === account.id ? (
-                        <Input
-                          value={editingAccount.name}
-                          onChange={(e) =>
-                            setEditingAccount((prev) =>
-                              prev ? { ...prev, name: e.target.value } : null
-                            )
-                          }
-                        />
-                      ) : (
-                        account.name
-                      )}
-                    </div>
+                <body>
 
-                    <div className={styles.customTableCell}>
-                      {editingAccount?.id === account.id ? (
-                        <Input
-                          value={editingAccount.type}
-                          onChange={(e) =>
-                            setEditingAccount((prev) =>
-                              prev ? { ...prev, type: e.target.value } : null
-                            )
-                          }
-                        />
-                      ) : (
-                        account.type
-                      )}
-                    </div>
+                  {personAccounts.map((account) => (
+                    <div key={account.id} className={styles.customTableRow}>
+                      <div className={styles.customTableCell}>
+                        {editingAccount?.id === account.id ? (
+                          <Input
+                            value={editingAccount.name}
+                            onChange={(e) =>
+                              setEditingAccount((prev) =>
+                                prev ? { ...prev, name: e.target.value } : null
+                              )
+                            }
+                          />
+                        ) : (
+                          account.name
+                        )}
+                      </div>
 
-                    <div className={styles.customTableCell}>
-                      {editingAccount?.id === account.id ? (
-                        <Input
-                          value={String(editingAccount.value)}
-                          type="number"
-                          onChange={(e) =>
-                            setEditingAccount((prev) =>
-                              prev
-                                ? { ...prev, value: parseFloat(e.target.value) }
-                                : null
-                            )
-                          }
-                        />
-                      ) : (
-                        account.value.toFixed(2)
-                      )}
-                    </div>
+                      <div className={styles.customTableCell}>
+                        {editingAccount?.id === account.id ? (
+                          <input
+                            type="checkbox"
+                            checked={!!editingAccount.status}
+                            onChange={(e) => {
+                              const updatedStatus = e.target.checked;
 
-                    <div className={styles.customTableCell}>
-                      {editingAccount?.id === account.id ? (
-                        <div className={styles.confirmationActions}>
-                          <Button label="Salvar" onClick={saveEditedAccount} />
-                          <Button label="Cancelar" onClick={cancelEdit} />
-                        </div>
-                      ) : (
-                        <>
-                          <button
-                            className={styles.deleteRowButton}
-                            onClick={() => deleteAccount(account.id)}
-                          >
-                            <BsTrash3 />
-                          </button>
-                          <button
-                            className={styles.editRowButton}
-                            onClick={() => startEditingAccount(account)}
-                          >
-                            <HiOutlinePencilSquare />
-                          </button>
-                        </>
-                      )}
+                              setEditingAccount((prev) =>
+                                prev ? { ...prev, status: updatedStatus } : null
+                              );
+
+                              const updatedAccounts = accounts.map((acc: Account) =>
+                                acc.id === account.id ? { ...acc, status: updatedStatus } : acc
+                              );
+                              setAccounts(updatedAccounts);
+                              localStorage.setItem("accounts", JSON.stringify(updatedAccounts));
+                            }}
+                          />
+                        ) : (
+                          account.status ? "Pago" : "Não Pago"
+                        )}
+                      </div>
+
+                      <div className={styles.customTableCell}>
+                        {editingAccount?.id === account.id ? (
+                          <Input
+                            value={editingAccount.type}
+                            onChange={(e) =>
+                              setEditingAccount((prev) =>
+                                prev ? { ...prev, type: e.target.value } : null
+                              )
+                            }
+                          />
+                        ) : (
+                          account.type
+                        )}
+                      </div>
+
+                      <div className={styles.customTableCell}>
+                        {editingAccount?.id === account.id ? (
+                          <Input
+                            value={String(editingAccount.value)}
+                            type="number"
+                            onChange={(e) =>
+                              setEditingAccount((prev) =>
+                                prev
+                                  ? { ...prev, value: parseFloat(e.target.value) }
+                                  : null
+                              )
+                            }
+                          />
+                        ) : (
+                          account.value.toFixed(2)
+                        )}
+                      </div>
+
+                      <div className={styles.customTableCell}>
+                        {editingAccount?.id === account.id ? (
+                          <div className={styles.confirmationActions}>
+                            <Button label="Salvar" onClick={saveEditedAccount} />
+                            <Button label="Cancelar" onClick={cancelEdit} />
+                          </div>
+                        ) : (
+                          <>
+                            <button
+                              className={styles.deleteRowButton}
+                              onClick={() => deleteAccount(account.id)}
+                            >
+                              <BsTrash3 />
+                            </button>
+                            <button
+                              className={styles.editRowButton}
+                              onClick={() => startEditingAccount(account)}
+                            >
+                              <HiOutlinePencilSquare />
+                            </button>
+                          </>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </body>
               </div>
             )}
           </div>

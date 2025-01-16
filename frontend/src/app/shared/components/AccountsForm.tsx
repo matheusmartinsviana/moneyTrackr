@@ -14,6 +14,7 @@ interface Person {
 interface Account {
   id: number;
   name: string;
+  status: boolean;
   type: string;
   value: number;
   personId: number;
@@ -224,9 +225,9 @@ const AccountsForm: React.FC = () => {
               people.length === 0
                 ? [{ value: "", label: "Não há pessoas disponíveis" }]
                 : people.map((person) => ({
-                    value: person.id,
-                    label: person.name,
-                  }))
+                  value: person.id,
+                  label: person.name,
+                }))
             }
             onChange={(value) => setSelectedPerson(Number(value))}
             placeholder="Selecionar Pessoa"
@@ -248,9 +249,9 @@ const AccountsForm: React.FC = () => {
               accountTypes.length === 0
                 ? [{ value: "", label: "Não há tipos de conta disponíveis" }]
                 : accountTypes.map((type) => ({
-                    value: type,
-                    label: type,
-                  }))
+                  value: type,
+                  label: type,
+                }))
             }
             onChange={(value) => setAccountType(String(value))}
             placeholder="Selecionar Tipo de Conta"
