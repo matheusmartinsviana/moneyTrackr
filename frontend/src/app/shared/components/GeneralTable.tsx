@@ -87,7 +87,7 @@ const GeneralTable: React.FC = () => {
 
         return (
           <div key={person.id} className={styles.personAccounts}>
-            <h3>{person.name}</h3>
+            <h3 className={styles.personAccount}>{person.name}</h3>
 
             {personAccounts.length === 0 ? (
               <p>Não há contas ainda</p>
