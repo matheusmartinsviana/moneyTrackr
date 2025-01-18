@@ -1,9 +1,10 @@
 .generalTableContainer {
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-between;
   flex-direction: column;
 }
+
 .customTable {
   display: flex;
   flex-direction: column;
@@ -34,16 +35,20 @@
   justify-content: flex-start;
   border-radius: 5px;
 }
+
 .customTableCell input {
   max-width: 150px;
   font-size: 14px;
 }
+
 .customTableRow {
   display: flex;
-  align-items: stretch;
+  align-items: start;
   justify-content: space-between;
   padding: 10px;
+  gap: 50px;
 }
+
 .customTableCell {
   width: 120px;
   padding: 10px;
@@ -72,6 +77,7 @@
   font-size: 20px;
   transition: all ease-in-out 0.2s;
 }
+
 .deleteRowButton svg:hover {
   color: rgba(191, 0, 0, 0.7);
 }
@@ -81,17 +87,20 @@
   color: rgb(37, 37, 37);
   transition: all ease-in-out 0.2s;
 }
+
 .editRowButton svg:hover {
   color: rgba(37, 37, 37, 0.719);
   font-size: 20px;
 }
+
 .editRowButton {
   margin-left: 9px;
 }
 
 .confirmationActions {
   display: flex;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
+  align-items: start;
+  justify-content: flex-start;
   gap: 5px;
 }
