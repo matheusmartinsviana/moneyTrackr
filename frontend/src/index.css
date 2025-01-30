@@ -4,7 +4,14 @@
   box-sizing: border-box;
   font-family: "Geist", sans-serif;
 }
-
+#particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Garante que o componente de partículas fique atrás de outros elementos */
+}
 a {
   color: rgba(0, 0, 0, 0.879);
   text-decoration: none;
