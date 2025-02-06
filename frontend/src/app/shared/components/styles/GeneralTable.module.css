@@ -1,132 +1,97 @@
 .generalTableContainer {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: column;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  overflow-x: auto;
 }
 
-.customTable {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-  overflow-x: scroll;
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .personAccounts {
-  display: flex;
-  margin-top: 20px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  margin-bottom: 30px;
 }
 
-.personAccount {
-  min-width: 40px;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  font-weight: 500;
-  border: 1px solid rgb(186, 186, 186);
-  padding: 4px 8px;
-  border-radius: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  transition: all ease-in-out 0.3s;
+.customTable {
+  display: block;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.customTable header {
-  display: flex;
+.customTable header,
+.customTable .customTableRow {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   align-items: center;
-  gap: 10px;
-  border-radius: 10px;
-  padding: 10px;
-  justify-content: space-between;
-}
-
-.customTable body {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
 }
 
 .customTableHeader {
   font-weight: bold;
-  width: 120px;
+  text-align: center;
+}
+
+.customTableCell {
   padding: 10px;
-  display: flex;
-  justify-content: flex-start;
-  border-radius: 5px;
+  text-align: center;
 }
 
 .customTableCell input {
-  max-width: 150px;
-  font-size: 14px;
-}
-
-.customTableRow {
-  display: flex;
-  align-items: start;
-  justify-content: space-between;
-  padding: 10px;
-  gap: 50px;
-}
-
-.customTableCell {
-  width: 120px;
-  padding: 10px;
-  display: flex;
-  justify-content: flex-start;
-  border-radius: 5px;
-}
-
-.customTableCell {
-  padding: 10px;
-  border-radius: 5px;
-}
-
-.customTableCell button {
-  cursor: pointer;
-}
-
-.deleteRowButton,
-.editRowButton {
-  background-color: transparent;
-  border: none;
-}
-
-.deleteRowButton svg {
-  color: rgb(191, 0, 0);
-  font-size: 20px;
-  transition: all ease-in-out 0.2s;
-}
-
-.deleteRowButton svg:hover {
-  color: rgba(191, 0, 0, 0.7);
-}
-
-.editRowButton svg {
-  font-size: 20px;
-  color: rgb(37, 37, 37);
-  transition: all ease-in-out 0.2s;
-}
-
-.editRowButton svg:hover {
-  color: rgba(37, 37, 37, 0.719);
-  font-size: 20px;
-}
-
-.editRowButton {
-  margin-left: 9px;
+  width: 80%;
+  padding: 5px;
 }
 
 .confirmationActions {
   display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: flex-start;
-  gap: 5px;
+  gap: 15px;
+  justify-content: center;
 }
 
-@media (max-width: 768px) {}
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.deleteRowButton {
+  color: grey;
+  font-size: 20px;
+}
+
+.editRowButton {
+  color: grey;
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  .customTable header,
+  .customTable .customTableRow {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  
+  .customTableHeader:nth-child(3),
+  .customTableHeader:nth-child(4),
+  .customTableCell:nth-child(3),
+  .customTableCell:nth-child(4) {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .customTable header,
+  .customTable .customTableRow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .customTableHeader:nth-child(2),
+  .customTableCell:nth-child(2) {
+    display: none;
+  }
+}

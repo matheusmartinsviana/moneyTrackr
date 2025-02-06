@@ -1,4 +1,3 @@
-/* eslint-disable */
 import React, { useEffect, useState } from "react";
 import styles from "./styles/GeneralTable.module.css";
 import Input from "./Input";
@@ -21,7 +20,6 @@ interface Account {
 }
 
 const GeneralTable: React.FC = () => {
-  // @ts-ignore
   const [people, setPeople] = useState<Person[]>(() => {
     const savedPeople = localStorage.getItem("people");
     return savedPeople ? JSON.parse(savedPeople) : [];
@@ -32,7 +30,6 @@ const GeneralTable: React.FC = () => {
     return savedAccounts ? JSON.parse(savedAccounts) : [];
   });
 
-  // @ts-ignore
   const [accountTypes, setAccountTypes] = useState<string[]>(() => {
     const savedTypes = localStorage.getItem("accountTypes");
     return savedTypes ? JSON.parse(savedTypes) : [];
@@ -72,7 +69,10 @@ const GeneralTable: React.FC = () => {
   };
 
   const deleteAccount = (accountId: number) => {
-    setAccounts((prev) => prev.filter((account) => account.id !== accountId));
+    const confirmDelete = window.confirm("Tem certeza que deseja excluir esta conta?");
+    if (confirmDelete) {
+      setAccounts((prev) => prev.filter((account) => account.id !== accountId));
+    }
   };
 
   const startEditingAccount = (account: Account) => {
@@ -102,7 +102,6 @@ const GeneralTable: React.FC = () => {
                 </header>
 
                 <body>
-
                   {personAccounts.map((account) => (
                     <div key={account.id} className={styles.customTableRow}>
                       <div className={styles.customTableCell}>
@@ -127,11 +126,9 @@ const GeneralTable: React.FC = () => {
                             checked={!!editingAccount.status}
                             onChange={(e) => {
                               const updatedStatus = e.target.checked;
-
                               setEditingAccount((prev) =>
                                 prev ? { ...prev, status: updatedStatus } : null
                               );
-
                               const updatedAccounts = accounts.map((acc: Account) =>
                                 acc.id === account.id ? { ...acc, status: updatedStatus } : acc
                               );
@@ -164,11 +161,10 @@ const GeneralTable: React.FC = () => {
                           <Input
                             value={String(editingAccount.value)}
                             type="number"
+                            min="0"
                             onChange={(e) =>
                               setEditingAccount((prev) =>
-                                prev
-                                  ? { ...prev, value: parseFloat(e.target.value) }
-                                  : null
+                                prev ? { ...prev, value: parseFloat(e.target.value) || 0 } : null
                               )
                             }
                           />
@@ -180,7 +176,11 @@ const GeneralTable: React.FC = () => {
                       <div className={styles.customTableCell}>
                         {editingAccount?.id === account.id ? (
                           <div className={styles.confirmationActions}>
-                            <Button label="Salvar" onClick={saveEditedAccount} />
+                            <Button
+                              label="Salvar"
+                              onClick={saveEditedAccount}
+                              disabled={!editingAccount?.name || !editingAccount?.type || editingAccount?.value < 0}
+                            />
                             <Button label="Cancelar" onClick={cancelEdit} />
                           </div>
                         ) : (
@@ -188,12 +188,14 @@ const GeneralTable: React.FC = () => {
                             <button
                               className={styles.deleteRowButton}
                               onClick={() => deleteAccount(account.id)}
+                              aria-label="Excluir conta"
                             >
                               <BsTrash3 />
                             </button>
                             <button
                               className={styles.editRowButton}
                               onClick={() => startEditingAccount(account)}
+                              aria-label="Editar conta"
                             >
                               <HiOutlinePencilSquare />
                             </button>
