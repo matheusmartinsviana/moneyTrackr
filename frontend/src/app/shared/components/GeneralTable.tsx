@@ -20,6 +20,7 @@ interface Account {
 }
 
 const GeneralTable: React.FC = () => {
+  //@ts-ignore
   const [people, setPeople] = useState<Person[]>(() => {
     const savedPeople = localStorage.getItem("people");
     return savedPeople ? JSON.parse(savedPeople) : [];
@@ -29,7 +30,7 @@ const GeneralTable: React.FC = () => {
     const savedAccounts = localStorage.getItem("accounts");
     return savedAccounts ? JSON.parse(savedAccounts) : [];
   });
-
+  //@ts-ignore
   const [accountTypes, setAccountTypes] = useState<string[]>(() => {
     const savedTypes = localStorage.getItem("accountTypes");
     return savedTypes ? JSON.parse(savedTypes) : [];
