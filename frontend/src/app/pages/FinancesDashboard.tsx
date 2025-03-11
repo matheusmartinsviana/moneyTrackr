@@ -17,10 +17,16 @@ interface Account {
   personId: number;
 }
 
+interface Earnings {
+  date: string;
+  value: number;
+}
+
 const FinancesDashboard: React.FC = () => {
   const [people, setPeople] = useState<Person[]>([]);
   const [accounts, setAccounts] = useState<Account[]>([]);
   const [accountTypes, setAccountTypes] = useState<string[]>([]);
+  const [earnings, setEarnings] = useState<Earnings[]>([]); // Dados de ganhos
   const [error, setError] = useState<string | null>(null);
 
   const loadDataFromLocalStorage = useCallback(() => {
@@ -28,11 +34,13 @@ const FinancesDashboard: React.FC = () => {
       const storedPeople = localStorage.getItem("people");
       const storedAccounts = localStorage.getItem("accounts");
       const storedAccountTypes = localStorage.getItem("accountTypes");
+      const storedEarnings = localStorage.getItem("earnings");
 
-      if (storedPeople && storedAccounts && storedAccountTypes) {
+      if (storedPeople && storedAccounts && storedAccountTypes && storedEarnings) {
         setPeople(JSON.parse(storedPeople));
         setAccounts(JSON.parse(storedAccounts));
         setAccountTypes(JSON.parse(storedAccountTypes));
+        setEarnings(JSON.parse(storedEarnings)); // Carregar ganhos
       } else {
         setError("Dados não encontrados no localStorage.");
       }
@@ -47,7 +55,25 @@ const FinancesDashboard: React.FC = () => {
   }, [loadDataFromLocalStorage]);
 
   const hasData =
-    people.length > 0 && accounts.length > 0 && accountTypes.length > 0;
+    people.length > 0 &&
+    accounts.length > 0 &&
+    accountTypes.length > 0 &&
+    earnings.length > 0;
+
+  const accountSummary = accounts.reduce((summary: any, account) => {
+    const type = account.type;
+    if (!summary[type]) {
+      summary[type] = { count: 0, total: 0 };
+    }
+    summary[type].count += 1;
+    summary[type].total += account.value;
+    return summary;
+  }, {});
+
+  const totalEarnings = earnings.reduce((total, earning) => total + earning.value, 0);
+  const totalSpending = accounts.reduce((total, account) => total + account.value, 0);
+
+  const spendingAlert = totalSpending > totalEarnings ? "Alerta: Você está gastando mais do que está ganhando!" : "";
 
   return (
     <div className={styles.container}>
@@ -62,7 +88,32 @@ const FinancesDashboard: React.FC = () => {
             accountTypes={accountTypes}
           />
           <TotalSpendingChart accounts={accounts} accountTypes={accountTypes} />
-          <EarningsLossesChart />
+          <EarningsLossesChart earnings={earnings} />
+
+          {/* Resumo das Contas por Tipo */}
+          <div className={styles.accountSummary}>
+            <h3>Resumo das Contas</h3>
+            {Object.keys(accountSummary).map((type) => (
+              <div key={type}>
+                <p>
+                  Tipo {type}: {accountSummary[type].count} contas - Total: {accountSummary[type].total}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {spendingAlert && <div className={styles.spendingAlert}>{spendingAlert}</div>}
+
+          <div className={styles.totalEarnings}>
+            <h3>Total de Ganhos</h3>
+            <p>{totalEarnings}</p>
+          </div>
+
+          <div className={styles.totalSpending}>
+            <h3>Total de Gastos</h3>
+            <p>{totalSpending}</p>
+          </div>
+
         </div>
       ) : (
         <p className={styles.loadingText}>Carregando dados...</p>
