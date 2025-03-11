@@ -12,7 +12,7 @@ const Home = lazy(
   () =>
     new Promise((resolve) =>
       //@ts-ignore
-      setTimeout(() => resolve(import("../pages/Home")), 5000)
+      setTimeout(() => resolve(import("../pages/Home")), 2000)
     )
 );
 

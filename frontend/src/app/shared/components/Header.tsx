@@ -3,6 +3,7 @@ import styles from "./styles/Header.module.css";
 import { Link } from "react-router-dom";
 import { MdDashboardCustomize } from "react-icons/md";
 import { GrAnalytics, GrHomeRounded } from "react-icons/gr";
+import moneyEmoji from "../../../assets/moneyTrackrLogo.webp";
 
 const Header = () => {
   const [showTitle, setShowTitle] = useState(true);
@@ -44,19 +45,21 @@ const Header = () => {
 
   return (
     <div
-      className={`${styles.headerContainer} ${
-        isScrolled && windowWidth < 768 ? styles.scrolled : ""
-      }`}
+      className={`${styles.headerContainer} ${isScrolled && windowWidth < 768 ? styles.scrolled : ""
+        }`}
     >
       <header className={styles.header}>
         <Link to="/">
           {showTitle ? (
-            <h1
-              className={styles.brandTitle}
-              title="Rastreie suas finanças, alcance seus objetivos."
-            >
-              Money Trackr
-            </h1>
+            <>
+              <h1
+                className={styles.brandTitle}
+                title="Rastreie suas finanças, alcance seus objetivos."
+              >
+                <img src={moneyEmoji} alt="Money Emoji" width={40} height={40} />
+                Money Trackr
+              </h1>
+            </>
           ) : (
             <p className={styles.brandSlogan}>
               Rastreie suas finanças, alcance seus objetivos.

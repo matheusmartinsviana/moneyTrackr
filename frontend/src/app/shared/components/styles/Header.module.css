@@ -39,6 +39,13 @@
   width: 400px;
 }
 
+.brandTitle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
 .navbarContainer {
   display: flex;
   justify-content: center;

@@ -46,6 +46,8 @@ const AccountsForm: React.FC = () => {
   const [selectedPerson, setSelectedPerson] = useState<number | "">("");
   const [newAccountType, setNewAccountType] = useState<string>("");
 
+  const [isSuccessMessage, setIsSuccessMessage] = useState<boolean>(false);
+  const [successMessage, setSuccessMessage] = useState<string>("");
   const [errorPersonName, setErrorPersonName] = useState<string>("");
   const [errorAccountName, setErrorAccountName] = useState<string>("");
   const [errorAccountType, setErrorAccountType] = useState<string>("");
@@ -138,11 +140,13 @@ const AccountsForm: React.FC = () => {
           personId: selectedPerson,
         },
       ]);
+      setSuccessMessage("Conta Criada com Sucesso 💸")
+      setIsSuccessMessage(true);
 
-      setAccountName("");
-      setAccountType("");
-      setAccountValue("");
-      setSelectedPerson("");
+      setTimeout(() => {
+        setIsSuccessMessage(false);
+        setSuccessMessage("")
+      }, 2000);
     }
   };
 
@@ -218,6 +222,50 @@ const AccountsForm: React.FC = () => {
           )}
         </section>
 
+        <section className={styles.accountTypesSection}>
+          <div className={styles.headerAccountTypesSection}>
+            <h2>Tipos de Conta</h2>
+          </div>
+          <div className={styles.accountTypeSectionContent}>
+            {accountTypes.length === 0 ? (
+              <p>Não há tipos de conta criados</p>
+            ) : (
+              accountTypes.map((type, index) => (
+                <div key={index} className={styles.accountTypeItem}>
+                  <span className={styles.spanAccountType}>
+                    {type}
+                    <button
+                      className={styles.xButtonAccountType}
+                      title="Remover"
+                      onClick={() => removeAccountType(type)}
+                    >
+                      <IoMdClose />
+                    </button>
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
+          {isActiveAddAccountType ? (
+            <>
+              <ReusableInput
+                label="Novo Tipo de Conta"
+                placeholder="Digite o novo tipo e pressione Enter"
+                onChange={(e) => setNewAccountType(e.target.value)}
+              />
+              <Button
+                label="Adicionar Tipo de Conta"
+                onClick={() => addAccountType(newAccountType)}
+              />
+            </>
+          ) : (
+            <Button
+              label="Adicionar Tipo de Conta"
+              onClick={() => setIsActiveAddAccountType(!isActiveAddAccountType)}
+            />
+          )}
+        </section>
+
         <section className={styles.addAccountSection}>
           <h2>Adicionar Conta</h2>
           <Select
@@ -269,49 +317,9 @@ const AccountsForm: React.FC = () => {
           {errorAccountValue && (
             <p className={styles.errorMessage}>{errorAccountValue}</p>
           )}
-          <Button label="Adicionar Conta" onClick={addAccount} />
-        </section>
-        <section className={styles.accountTypesSection}>
-          <div className={styles.headerAccountTypesSection}>
-            <h2>Tipos de Conta</h2>
-          </div>
-          <div className={styles.accountTypeSectionContent}>
-            {accountTypes.length === 0 ? (
-              <p>Não há tipos de conta criados</p>
-            ) : (
-              accountTypes.map((type, index) => (
-                <div key={index} className={styles.accountTypeItem}>
-                  <span className={styles.spanAccountType}>
-                    {type}
-                    <button
-                      className={styles.xButtonAccountType}
-                      title="Remover"
-                      onClick={() => removeAccountType(type)}
-                    >
-                      <IoMdClose />
-                    </button>
-                  </span>
-                </div>
-              ))
-            )}
-          </div>
-          {isActiveAddAccountType ? (
-            <>
-              <ReusableInput
-                label="Novo Tipo de Conta"
-                placeholder="Digite o novo tipo e pressione Enter"
-                onChange={(e) => setNewAccountType(e.target.value)}
-              />
-              <Button
-                label="Adicionar Tipo de Conta"
-                onClick={() => addAccountType(newAccountType)}
-              />
-            </>
-          ) : (
-            <Button
-              label="Adicionar Tipo de Conta"
-              onClick={() => setIsActiveAddAccountType(!isActiveAddAccountType)}
-            />
+          <Button disabled={isSuccessMessage} label="Adicionar Conta" onClick={addAccount} />
+          {successMessage && (
+            <p className="successMessage">{successMessage}</p>
           )}
         </section>
       </div>
