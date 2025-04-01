@@ -84,7 +84,7 @@ const EarningsLossesChart: React.FC = () => {
       {accounts.length > 0 || earnings.length > 0 ? (
         <Doughnut data={calculateData()} options={options} />
       ) : (
-        <p>Carregando dados...</p>
+        <p>Ainda não há dados para carregar o gráfico...</p>
       )}
     </div>
   );

@@ -124,7 +124,7 @@ const FinancesDashboard: React.FC = () => {
 
         </div>
       ) : (
-        <p className={styles.loadingText}>Carregando dados...</p>
+        <p className={styles.loadingText}>Ainda não há dados para mostrar... Registre contas e ganhos para o dashboard aparecer</p>
       )}
     </div>
   );
