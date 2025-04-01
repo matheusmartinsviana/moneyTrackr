@@ -89,6 +89,14 @@ const FinancesDashboard: React.FC = () => {
           />
           <TotalSpendingChart accounts={accounts} accountTypes={accountTypes} />
           <EarningsLossesChart earnings={earnings} />
+          <div className="{styles.accountResults}>">
+            <h2>Relação entre saídas e entradas de dinheiro:</h2>
+            <div>
+              <p>Entradas: {totalEarnings}</p>
+              <p>Saídas: {totalSpending}</p>
+              <p>Saldo: {totalEarnings - totalSpending}</p>
+            </div>
+          </div>
 
           {/* Resumo das Contas por Tipo */}
           <div className={styles.accountSummary}>
@@ -96,7 +104,7 @@ const FinancesDashboard: React.FC = () => {
             {Object.keys(accountSummary).map((type) => (
               <div key={type}>
                 <p>
-                  Tipo {type}: {accountSummary[type].count} contas - Total: {accountSummary[type].total}
+                  Tipo {type}: {accountSummary[type].count} {accountSummary[type].count > 1 ? "contas" : "conta"} - Total: {accountSummary[type].total}
                 </p>
               </div>
             ))}
@@ -106,12 +114,12 @@ const FinancesDashboard: React.FC = () => {
 
           <div className={styles.totalEarnings}>
             <h3>Total de Ganhos</h3>
-            <p>{totalEarnings}</p>
+            <p>{totalEarnings.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
           </div>
 
           <div className={styles.totalSpending}>
             <h3>Total de Gastos</h3>
-            <p>{totalSpending}</p>
+            <p>{totalSpending.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
           </div>
 
         </div>
