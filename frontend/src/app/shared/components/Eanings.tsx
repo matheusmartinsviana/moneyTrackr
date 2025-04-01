@@ -49,11 +49,13 @@ const Earnings: React.FC = () => {
           type="number"
           placeholder="Valor do ganho"
           value={value}
+          maxLength={10}
           onChange={(e) => setValue(e.target.value)}
         />
         <Input
           type="text"
           placeholder="Descrição"
+          maxLength={50}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         />

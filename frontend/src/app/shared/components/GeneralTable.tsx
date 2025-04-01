@@ -108,6 +108,7 @@ const GeneralTable: React.FC = () => {
                       <div className={styles.customTableCell}>
                         {editingAccount?.id === account.id ? (
                           <Input
+                            maxLength={50}
                             value={editingAccount.name}
                             onChange={(e) =>
                               setEditingAccount((prev) =>
@@ -124,6 +125,7 @@ const GeneralTable: React.FC = () => {
                         {editingAccount?.id === account.id ? (
                           <input
                             type="checkbox"
+                            maxLength={50}
                             checked={!!editingAccount.status}
                             onChange={(e) => {
                               const updatedStatus = e.target.checked;
@@ -146,6 +148,7 @@ const GeneralTable: React.FC = () => {
                         {editingAccount?.id === account.id ? (
                           <Input
                             value={editingAccount.type}
+                            maxLength={50}
                             onChange={(e) =>
                               setEditingAccount((prev) =>
                                 prev ? { ...prev, type: e.target.value } : null
@@ -161,6 +164,7 @@ const GeneralTable: React.FC = () => {
                         {editingAccount?.id === account.id ? (
                           <Input
                             value={String(editingAccount.value)}
+                            maxLength={10}
                             type="number"
                             min="0"
                             onChange={(e) =>

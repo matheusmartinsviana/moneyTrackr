@@ -205,6 +205,7 @@ const AccountsForm: React.FC = () => {
             <>
               <ReusableInput
                 label="Nome da Pessoa"
+                maxLength={20}
                 value={personName}
                 onChange={(e) => setPersonName(e.target.value)}
                 placeholder="Digite o nome da pessoa"
@@ -250,6 +251,7 @@ const AccountsForm: React.FC = () => {
             <>
               <ReusableInput
                 label="Novo Tipo de Conta"
+                maxLength={20}
                 placeholder="Digite o novo tipo e pressione Enter"
                 onChange={(e) => setNewAccountType(e.target.value)}
               />
@@ -285,6 +287,7 @@ const AccountsForm: React.FC = () => {
           )}
           <ReusableInput
             label="Nome da Conta"
+            maxLength={20}
             value={accountName}
             onChange={(e) => setAccountName(e.target.value)}
             placeholder="Digite o nome da conta"
@@ -310,6 +313,7 @@ const AccountsForm: React.FC = () => {
           <ReusableInput
             label="Valor da Conta"
             type="number"
+            maxLength={10}
             value={accountValue}
             onChange={(e) => setAccountValue(e.target.value)}
             placeholder="Digite o valor da conta"
