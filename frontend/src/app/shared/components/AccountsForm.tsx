@@ -5,6 +5,7 @@ import Button from "./Button";
 import ReusableInput from "./Input";
 import Select from "./Select";
 import styles from "./styles/AccountsForm.module.css";
+import { MotionDiv } from "./common/motion-wrapper";
 
 interface Person {
   id: number;
@@ -177,7 +178,12 @@ const AccountsForm: React.FC = () => {
   };
 
   return (
-    <div className={styles.main}>
+    <MotionDiv
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.5 }}
+      className={styles.main}>
       <div className={styles.mainFinancesContent}>
         <section className={styles.addPersonSection}>
           <h2>Pessoas/Responsáveis</h2>
@@ -327,7 +333,7 @@ const AccountsForm: React.FC = () => {
           )}
         </section>
       </div>
-    </div>
+    </MotionDiv>
   );
 };
 

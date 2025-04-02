@@ -52,3 +52,13 @@
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+.linkGlobal {
+    display: flex;
+    align-self: center;
+    justify-content: center;
+    margin: 20px 0;
+    text-decoration: underline;
+    color: cornflowerblue;
+    cursor: pointer;
+}

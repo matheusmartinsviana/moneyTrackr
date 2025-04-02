@@ -70,12 +70,13 @@ button {
 }
 
 @media (max-width: 768px) {
+
   .customTable header,
   .customTable .customTableRow {
     grid-template-columns: repeat(3, 1fr);
     gap: 10px;
   }
-  
+
   .customTableHeader:nth-child(3),
   .customTableHeader:nth-child(4),
   .customTableCell:nth-child(3),
@@ -85,13 +86,32 @@ button {
 }
 
 @media (max-width: 480px) {
+
   .customTable header,
   .customTable .customTableRow {
     grid-template-columns: repeat(2, 1fr);
   }
-  
+
   .customTableHeader:nth-child(2),
   .customTableCell:nth-child(2) {
     display: none;
   }
+}
+
+.noAccountsMessage {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.manageFinancesLink {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0 20px 0;
+  text-decoration: underline;
+  color: cornflowerblue;
+  cursor: pointer;
 }

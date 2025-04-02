@@ -3,6 +3,8 @@ import PersonSpendingChart from "./PersonSpendingChart";
 import TotalSpendingChart from "./TotalSpendingChart";
 import styles from "./styles/FinancesDashboard.module.css";
 import EarningsLossesChart from "./EarningsAndLossesChart";
+import { Link } from "react-router-dom";
+import { MotionDiv } from "../shared/components/common/motion-wrapper";
 
 interface Person {
   id: number;
@@ -81,13 +83,19 @@ const FinancesDashboard: React.FC = () => {
       {error ? (
         <p className={styles.errorText}>{error}</p>
       ) : hasData ? (
-        <div className={styles.chartContainer}>
+        <MotionDiv
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.5 }}
+          className={styles.chartContainer}>
           <PersonSpendingChart
             people={people}
             accounts={accounts}
             accountTypes={accountTypes}
           />
           <TotalSpendingChart accounts={accounts} accountTypes={accountTypes} />
+          {/* @ts-ignore */}
           <EarningsLossesChart earnings={earnings} />
           <div className="{styles.accountResults}>">
             <h2>Relação entre saídas e entradas de dinheiro:</h2>
@@ -122,9 +130,12 @@ const FinancesDashboard: React.FC = () => {
             <p>{totalSpending.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })}</p>
           </div>
 
-        </div>
+        </MotionDiv>
       ) : (
-        <p className={styles.loadingText}>Ainda não há dados para mostrar... Registre contas e ganhos para o dashboard aparecer</p>
+        <>
+          <p className={styles.loadingText}>Ainda não há dados para mostrar... Registre contas e ganhos para o dashboard aparecer</p>
+          <Link to={"/gerenciar-financias"} className={styles.linkGlobal}>Vá para a tela de gerenciamento</Link>
+        </>
       )}
     </div>
   );

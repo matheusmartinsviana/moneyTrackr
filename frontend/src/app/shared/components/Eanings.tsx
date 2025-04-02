@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./styles/Earnings.module.css";
 import Input from "./Input";
 import Button from "./Button";
+import { MotionDiv } from "./common/motion-wrapper";
 
 const Earnings: React.FC = () => {
   const [earnings, setEarnings] = useState<
@@ -42,7 +43,12 @@ const Earnings: React.FC = () => {
   };
 
   return (
-    <div className={styles.earningsSection}>
+    <MotionDiv
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 20 }}
+      transition={{ duration: 0.5 }}
+      className={styles.earningsSection}>
       <h1>Gerenciar Ganhos</h1>
       <div>
         <Input
@@ -72,7 +78,7 @@ const Earnings: React.FC = () => {
           </li>
         ))}
       </ul>
-    </div>
+    </MotionDiv>
   );
 };
 
